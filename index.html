@@ -3,119 +3,191 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Nexus Oficina — Painel ADM Preto &amp; Verde</title>
+  <title>Nexus Oficina — SaaS Admin Console</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg-0: #040705;
-      --bg-1: #070e0a;
-      --surface: rgba(10, 22, 16, 0.86);
-      --surface-2: rgba(7, 15, 11, 0.95);
-      --surface-hover: rgba(16, 185, 129, 0.12);
-      --border: rgba(52, 211, 153, 0.16);
-      --border-strong: rgba(16, 185, 129, 0.44);
-      --text: #ecfdf5;
-      --text-soft: #86efac;
-      --text-dim: #5eead4;
-      --text-muted: #6ee7b7;
+      --bg-0: #030604;
+      --bg-1: #070d0a;
+      --sidebar: #060b08;
+      --surface: #0b140f;
+      --surface-2: #0f1c15;
+      --surface-hover: #14261c;
+      --border: rgba(52, 211, 153, 0.14);
+      --border-strong: rgba(16, 185, 129, 0.42);
+      --text: #f0fdf4;
+      --text-soft: #9ca3af;
+      --text-muted: #6b7280;
       --accent: #10b981;
-      --accent-2: #059669;
+      --accent-dark: #059669;
       --accent-bright: #34d399;
-      --accent-glow: rgba(16, 185, 129, 0.28);
+      --accent-glow: rgba(16, 185, 129, 0.22);
       --ok: #10b981;
-      --ok-bg: rgba(16, 185, 129, 0.16);
-      --warn: #eab308;
-      --warn-bg: rgba(234, 179, 8, 0.16);
+      --ok-bg: rgba(16, 185, 129, 0.14);
+      --warn: #f59e0b;
+      --warn-bg: rgba(245, 158, 11, 0.14);
       --err: #ef4444;
-      --err-bg: rgba(239, 68, 68, 0.16);
-      --radius-lg: 18px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
-      --shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      --err-bg: rgba(239, 68, 68, 0.14);
+      --radius-lg: 14px;
+      --radius-md: 10px;
+      --radius-sm: 7px;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
     }
 
     body {
       min-height: 100vh;
+      background: var(--bg-0);
       color: var(--text);
-      background:
-        radial-gradient(900px 500px at 10% -10%, rgba(16, 185, 129, 0.16), transparent 60%),
-        radial-gradient(800px 480px at 90% 0%, rgba(5, 150, 105, 0.14), transparent 60%),
-        linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
-      padding: 28px 20px 56px;
+      display: flex;
       line-height: 1.45;
     }
 
-    .app {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-
-    /* Topbar */
-    .topbar {
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: var(--sidebar);
+      border-right: 1px solid var(--border);
+      padding: 24px 16px;
       display: flex;
-      flex-wrap: wrap;
+      flex-direction: column;
       justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      background: var(--surface);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 20px 24px;
-      box-shadow: var(--shadow);
-      margin-bottom: 20px;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 40;
     }
 
     .brand {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
+      padding: 0 8px 22px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 20px;
     }
 
-    .brand-badge {
-      width: 46px;
-      height: 46px;
-      border-radius: 13px;
-      background: linear-gradient(135deg, var(--accent-bright), var(--accent-2));
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent-bright), var(--accent-dark));
+      color: #021008;
+      font-weight: 800;
+      font-size: 1rem;
       display: grid;
       place-items: center;
-      font-weight: 800;
-      font-size: 1.15rem;
-      color: #03120b;
-      box-shadow: 0 10px 24px var(--accent-glow);
+      box-shadow: 0 6px 20px var(--accent-glow);
+      flex-shrink: 0;
     }
 
-    .brand h1 {
-      font-size: 1.35rem;
+    .brand-info h1 {
+      font-size: 1.02rem;
       font-weight: 700;
       letter-spacing: -0.02em;
     }
 
-    .brand p {
-      font-size: 0.84rem;
-      color: rgba(236, 253, 245, 0.72);
+    .brand-info span {
+      font-size: 0.74rem;
+      color: var(--accent-bright);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    .status-pill {
+    .nav-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 700;
+      padding: 0 10px 8px;
+    }
+
+    .nav-list {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 11px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-soft);
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-align: left;
+    }
+
+    .nav-btn:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(90deg, rgba(16, 185, 129, 0.18), rgba(16, 185, 129, 0.04));
+      border-color: var(--border-strong);
+      color: var(--accent-bright);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.16);
+      color: var(--accent-bright);
+    }
+
+    .nav-pill.warn {
+      background: var(--warn-bg);
+      color: #fbbf24;
+    }
+
+    .sidebar-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+      font-size: 0.76rem;
+      color: var(--text-soft);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .conn-badge {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 14px;
-      border-radius: 999px;
-      background: rgba(16, 185, 129, 0.14);
-      border: 1px solid rgba(52, 211, 153, 0.34);
-      font-size: 0.82rem;
-      font-weight: 600;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--surface);
+      border: 1px solid var(--border);
       color: var(--accent-bright);
+      font-weight: 600;
     }
 
     .dot-live {
@@ -123,142 +195,144 @@
       height: 8px;
       border-radius: 50%;
       background: var(--accent-bright);
-      box-shadow: 0 0 10px var(--accent-bright);
+      box-shadow: 0 0 8px var(--accent-bright);
     }
 
-    /* KPI Grid */
-    .kpis {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    .dot-offline {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #6b7280;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      margin-left: 260px;
+      padding: 26px 30px 60px;
+      max-width: 1440px;
+    }
+
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
       gap: 14px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
-    .kpi-card {
+    .page-title h2 {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .page-title p {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .topbar-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    /* KPIs */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(195px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi {
       background: var(--surface);
-      backdrop-filter: blur(14px);
       border: 1px solid var(--border);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-lg);
       padding: 18px 20px;
-      transition: transform 0.16s ease, border-color 0.16s ease;
+      position: relative;
+      overflow: hidden;
     }
 
-    .kpi-card:hover {
-      transform: translateY(-2px);
-      border-color: var(--border-strong);
+    .kpi::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-bright), transparent);
+      opacity: 0.6;
     }
 
-    .kpi-label {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: rgba(167, 243, 208, 0.75);
+    .kpi-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text-soft);
+      font-size: 0.76rem;
       font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
     }
 
-    .kpi-value {
+    .kpi-num {
       font-size: 1.75rem;
       font-weight: 800;
-      margin-top: 6px;
+      margin: 8px 0 4px;
       letter-spacing: -0.03em;
     }
 
-    .kpi-sub {
-      font-size: 0.8rem;
-      color: rgba(236, 253, 245, 0.56);
-      margin-top: 4px;
+    .kpi-foot {
+      font-size: 0.78rem;
+      color: var(--text-muted);
     }
 
-    /* Navegação por Abas */
-    .tabs-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      background: var(--surface);
-      backdrop-filter: blur(16px);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 10px;
-      margin-bottom: 20px;
-      box-shadow: var(--shadow);
-    }
-
-    .tab-btn {
-      flex: 1 1 180px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 16px;
-      border-radius: var(--radius-md);
-      border: 1px solid transparent;
-      background: transparent;
-      color: rgba(236, 253, 245, 0.7);
-      font-size: 0.9rem;
-      font-weight: 700;
-      cursor: pointer;
-      transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
-    }
-
-    .tab-btn:hover {
-      background: var(--surface-hover);
-      color: var(--text);
-    }
-
-    .tab-btn.active {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.22));
-      border-color: var(--border-strong);
-      color: var(--accent-bright);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
-    }
-
-    .tab-count {
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 0.74rem;
-      background: rgba(16, 185, 129, 0.18);
-      color: var(--text);
-    }
-
+    /* Panels & Cards */
     .tab-panel {
       display: none;
     }
 
     .tab-panel.active {
       display: block;
+      animation: fadeIn 0.18s ease;
     }
 
-    /* Cards */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .card {
       background: var(--surface);
-      backdrop-filter: blur(16px);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 24px;
+      padding: 22px;
       box-shadow: var(--shadow);
       margin-bottom: 22px;
     }
 
-    .card-head {
+    .card-header {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
+      padding-bottom: 16px;
       margin-bottom: 18px;
-      padding-bottom: 14px;
       border-bottom: 1px solid var(--border);
     }
 
-    .card-head h2 {
-      font-size: 1.08rem;
+    .card-header h3 {
+      font-size: 1.05rem;
       font-weight: 700;
-      letter-spacing: -0.01em;
     }
 
-    .card-head span {
+    .card-header small {
+      color: var(--text-soft);
       font-size: 0.82rem;
-      color: rgba(236, 253, 245, 0.7);
     }
 
     code {
@@ -266,8 +340,11 @@
       background: rgba(16, 185, 129, 0.12);
       padding: 2px 6px;
       border-radius: 5px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.78rem;
     }
 
+    /* Form */
     .form-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
@@ -277,7 +354,7 @@
     .field {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 6px;
     }
 
     .field.span-2 {
@@ -288,16 +365,14 @@
       grid-column: 1 / -1;
     }
 
-    @media (max-width: 720px) {
-      .field.span-2 {
-        grid-column: 1 / -1;
-      }
+    @media (max-width: 768px) {
+      .field.span-2 { grid-column: 1 / -1; }
     }
 
     label {
-      font-size: 0.82rem;
+      font-size: 0.8rem;
       font-weight: 600;
-      color: rgba(167, 243, 208, 0.82);
+      color: #d1fae5;
     }
 
     input, select {
@@ -306,67 +381,71 @@
       color: var(--text);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 11px 13px;
-      font-size: 0.92rem;
+      padding: 10px 13px;
+      font-size: 0.9rem;
       outline: none;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     input:focus, select:focus {
       border-color: var(--accent-bright);
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+      box-shadow: 0 0 0 3px var(--accent-glow);
     }
 
     input[readonly] {
       color: var(--accent-bright);
-      background: rgba(6, 16, 11, 0.85);
+      background: #060e0a;
       font-weight: 600;
     }
 
-    .inline-row {
+    .inline-group {
       display: flex;
       gap: 8px;
-      align-items: center;
     }
 
-    .inline-row input {
-      flex: 1;
-    }
-
-    .toggle-box {
+    .toggle-card {
       display: flex;
       align-items: center;
       gap: 10px;
       background: var(--surface-2);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 10px 13px;
-      min-height: 43px;
+      padding: 9px 13px;
+      min-height: 41px;
     }
 
-    .toggle-box input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
+    .toggle-card input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
       accent-color: var(--accent-bright);
       cursor: pointer;
     }
 
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent-bright), var(--accent-2));
-      color: #03120b;
-      border: none;
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 16px;
       border-radius: var(--radius-sm);
-      padding: 12px 20px;
-      font-size: 0.94rem;
-      font-weight: 800;
+      font-size: 0.88rem;
+      font-weight: 700;
       cursor: pointer;
-      box-shadow: 0 10px 24px var(--accent-glow);
-      transition: transform 0.14s ease, filter 0.14s ease;
+      border: 1px solid transparent;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-bright), var(--accent-dark));
+      color: #021008;
+      box-shadow: 0 8px 22px var(--accent-glow);
     }
 
     .btn-primary:hover:not(:disabled) {
-      transform: translateY(-1px);
       filter: brightness(1.06);
+      transform: translateY(-1px);
     }
 
     .btn-primary:disabled {
@@ -374,280 +453,407 @@
       cursor: not-allowed;
     }
 
-    .btn-ghost {
+    .btn-secondary {
       background: var(--surface-2);
       color: var(--text);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 10px 13px;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: border-color 0.15s ease, background 0.15s ease;
+      border-color: var(--border);
     }
 
-    .btn-ghost:hover {
+    .btn-secondary:hover {
       border-color: var(--border-strong);
       background: var(--surface-hover);
     }
 
-    .actions-cell {
-      display: flex;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .btn-mini {
-      padding: 6px 10px;
-      border-radius: 7px;
-      font-size: 0.78rem;
+    .btn-xs {
+      padding: 5px 9px;
+      font-size: 0.76rem;
+      border-radius: 6px;
       font-weight: 600;
       cursor: pointer;
       border: 1px solid transparent;
-      transition: filter 0.15s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .btn-mini:hover {
-      filter: brightness(1.12);
-    }
-
-    .btn-mini-renew {
-      background: rgba(16, 185, 129, 0.18);
+    .btn-xs-green {
+      background: var(--ok-bg);
       color: var(--accent-bright);
-      border-color: rgba(52, 211, 153, 0.38);
+      border-color: rgba(52, 211, 153, 0.35);
     }
 
-    .btn-mini-off {
+    .btn-xs-red {
       background: var(--err-bg);
       color: #fca5a5;
       border-color: rgba(239, 68, 68, 0.35);
     }
 
-    .btn-mini-on {
-      background: var(--ok-bg);
-      color: #6ee7b7;
-      border-color: rgba(16, 185, 129, 0.35);
+    .btn-xs-neutral {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      border-color: var(--border);
     }
 
-    .alert {
-      margin-top: 16px;
-      padding: 12px 16px;
-      border-radius: var(--radius-sm);
-      font-size: 0.88rem;
-      font-weight: 500;
-      display: none;
+    .btn-xs:hover {
+      filter: brightness(1.14);
     }
 
-    .alert.ok {
-      display: block;
-      background: var(--ok-bg);
-      border: 1px solid rgba(52, 211, 153, 0.42);
-      color: #a7f3d0;
-    }
-
-    .alert.err {
-      display: block;
-      background: var(--err-bg);
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      color: #fecaca;
-    }
-
-    .filters {
+    /* Filters & Table */
+    .toolbar {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
+      align-items: center;
     }
 
-    .filters select,
-    .filters input {
+    .toolbar input, .toolbar select {
       width: auto;
-      min-width: 200px;
+      min-width: 185px;
     }
 
-    .table-wrap {
+    .table-box {
       overflow-x: auto;
-      border-radius: var(--radius-md);
       border: 1px solid var(--border);
-      background: rgba(4, 9, 7, 0.65);
+      border-radius: var(--radius-md);
+      background: #060c09;
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
     }
 
     th {
       text-align: left;
       padding: 12px 14px;
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: var(--accent-bright);
-      background: rgba(9, 20, 15, 0.92);
+      background: #09140e;
       border-bottom: 1px solid var(--border);
     }
 
     td {
       padding: 13px 14px;
-      border-bottom: 1px solid rgba(52, 211, 153, 0.09);
+      border-bottom: 1px solid rgba(52, 211, 153, 0.08);
       vertical-align: middle;
     }
 
     tbody tr:hover {
-      background: rgba(16, 185, 129, 0.07);
+      background: rgba(16, 185, 129, 0.06);
     }
 
     tbody tr:last-child td {
       border-bottom: none;
     }
 
-    .oficina-chip {
-      display: inline-block;
+    .mono-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       margin-top: 4px;
       padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 0.75rem;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-      background: rgba(16, 185, 129, 0.14);
+      border-radius: 5px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.74rem;
+      background: rgba(16, 185, 129, 0.12);
       color: #a7f3d0;
-      border: 1px solid rgba(52, 211, 153, 0.32);
+      border: 1px solid rgba(52, 211, 153, 0.28);
       cursor: pointer;
+    }
+
+    .mono-chip:hover {
+      border-color: var(--accent-bright);
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 4px 10px;
+      gap: 5px;
+      padding: 3px 9px;
       border-radius: 999px;
-      font-size: 0.78rem;
+      font-size: 0.75rem;
       font-weight: 700;
     }
 
-    .badge.ativo {
+    .badge.ok {
       background: var(--ok-bg);
       color: #6ee7b7;
       border: 1px solid rgba(16, 185, 129, 0.35);
     }
 
-    .badge.inativo {
+    .badge.err {
       background: var(--err-bg);
       color: #fca5a5;
       border: 1px solid rgba(239, 68, 68, 0.35);
     }
 
-    .badge.vencendo {
+    .badge.warn {
       background: var(--warn-bg);
-      color: #fde047;
-      border: 1px solid rgba(234, 179, 8, 0.35);
+      color: #fcd34d;
+      border: 1px solid rgba(245, 158, 11, 0.35);
+    }
+
+    .badge.offline {
+      background: rgba(107, 114, 128, 0.16);
+      color: #9ca3af;
+      border: 1px solid rgba(156, 163, 175, 0.25);
+    }
+
+    .actions-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .fin-summary-bar {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .fin-box {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+    }
+
+    .fin-box small {
+      color: var(--text-soft);
+      font-size: 0.76rem;
+      display: block;
+    }
+
+    .fin-box strong {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* Toast / Alert */
+    .toast {
+      position: fixed;
+      bottom: 22px;
+      right: 22px;
+      max-width: 420px;
+      padding: 13px 16px;
+      border-radius: var(--radius-md);
+      font-size: 0.86rem;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      z-index: 90;
+      display: none;
+    }
+
+    .toast.ok {
+      display: block;
+      background: #062417;
+      border: 1px solid var(--accent-bright);
+      color: #d1fae5;
+    }
+
+    .toast.err {
+      display: block;
+      background: #2b0b0b;
+      border: 1px solid var(--err);
+      color: #fecaca;
+    }
+
+    /* Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      display: none;
+      place-items: center;
+      padding: 20px;
+      z-index: 80;
+    }
+
+    .modal-backdrop.open {
+      display: grid;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 560px;
+      background: var(--surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .modal-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (max-width: 920px) {
+      body { flex-direction: column; }
+      .sidebar {
+        position: static;
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 16px;
+      }
+      .nav-list { flex-direction: row; flex-wrap: wrap; }
+      .nav-btn { width: auto; flex: 1 1 140px; }
+      .main { margin-left: 0; padding: 20px 16px 50px; }
     }
   </style>
 </head>
 <body>
-  <div class="app">
-    <header class="topbar">
+  <aside class="sidebar">
+    <div>
       <div class="brand">
-        <div class="brand-badge">NO</div>
-        <div>
-          <h1>Nexus Oficina — Painel Administrativo</h1>
-          <p>Gestão de contas, vencimentos e isolamento multi-oficina • Projeto <strong>oficina-sistema-18376</strong></p>
+        <div class="brand-logo">NO</div>
+        <div class="brand-info">
+          <h1>Nexus Oficina</h1>
+          <span>SaaS Control Center</span>
         </div>
       </div>
-      <div class="status-pill">
-        <span class="dot-live"></span>
-        <span>Firestore em tempo real</span>
-      </div>
-    </header>
 
-    <section class="kpis">
-      <div class="kpi-card">
-        <div class="kpi-label">Clientes Cadastrados</div>
-        <div class="kpi-value" id="kpiTotal">0</div>
-        <div class="kpi-sub">Total na coleção usuarios</div>
+      <div class="nav-label">Navegação</div>
+      <nav class="nav-list">
+        <button type="button" class="nav-btn active" data-tab="clientes">
+          <span class="nav-left">Clientes</span>
+          <span class="nav-pill" id="navCountClientes">0</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="cadastro">
+          <span class="nav-left">Novo Cadastro</span>
+          <span class="nav-pill">+</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="vencimentos">
+          <span class="nav-left">Vencimentos</span>
+          <span class="nav-pill warn" id="navCountVenc">0</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="financeiro">
+          <span class="nav-left">Financeiro</span>
+          <span class="nav-pill" id="navPillMrr">R$ 0</span>
+        </button>
+        <button type="button" class="nav-btn" data-tab="oficinas">
+          <span class="nav-left">Oficinas (Tenants)</span>
+          <span class="nav-pill" id="navCountOficinas">0</span>
+        </button>
+      </nav>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="conn-badge">
+        <span class="dot-live"></span>
+        <span>Firebase Sincronizado</span>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Contas Ativas</div>
-        <div class="kpi-value" id="kpiAtivos" style="color: #34d399;">0</div>
-        <div class="kpi-sub">Com acesso liberado</div>
+      <div>Projeto: <strong>oficina-sistema-18376</strong></div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="topbar">
+      <div class="page-title">
+        <h2 id="headerTitle">Carteira de Clientes</h2>
+        <p id="headerSubtitle">Gerencie contas, presença online/offline e isolamento por oficina.</p>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Oficinas Isoladas</div>
-        <div class="kpi-value" id="kpiOficinas" style="color: #6ee7b7;">0</div>
-        <div class="kpi-sub">Identificadores idOficina</div>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-secondary" id="btnExportarCsv">Exportar CSV</button>
+        <button type="button" class="btn btn-primary" onclick="mudarAba('cadastro')">+ Novo Cliente</button>
       </div>
-      <div class="kpi-card">
-        <div class="kpi-label">Vencendo / Vencidos</div>
-        <div class="kpi-value" id="kpiVencimento" style="color: #fde047;">0</div>
-        <div class="kpi-sub">Até 5 dias ou expirados</div>
+    </div>
+
+    <section class="kpi-grid">
+      <div class="kpi">
+        <div class="kpi-top"><span>Online Agora</span></div>
+        <div class="kpi-num" id="kpiOnline" style="color: var(--accent-bright);">0</div>
+        <div class="kpi-foot">Sessões ativas nos últimos 75s</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span>Assinaturas Ativas</span></div>
+        <div class="kpi-num" id="kpiAtivos">0</div>
+        <div class="kpi-foot">De <span id="kpiTotal">0</span> clientes cadastrados</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span>Oficinas Isoladas</span></div>
+        <div class="kpi-num" id="kpiOficinas" style="color: #6ee7b7;">0</div>
+        <div class="kpi-foot">Ambientes únicos (idOficina)</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span>MRR Estimado</span></div>
+        <div class="kpi-num" id="kpiMrr" style="color: var(--accent-bright);">R$ 0</div>
+        <div class="kpi-foot">Receita mensal recorrente</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-top"><span>Atenção Vencimento</span></div>
+        <div class="kpi-num" id="kpiVenc" style="color: #fbbf24;">0</div>
+        <div class="kpi-foot">Vencidos ou até 5 dias</div>
       </div>
     </section>
 
-    <nav class="tabs-bar" aria-label="Seções do painel">
-      <button type="button" class="tab-btn active" data-tab="clientes">
-        <span>Clientes</span>
-        <span class="tab-count" id="tabCountClientes">0</span>
-      </button>
-      <button type="button" class="tab-btn" data-tab="cadastro">
-        <span>Cadastro</span>
-        <span class="tab-count">+ Novo</span>
-      </button>
-      <button type="button" class="tab-btn" data-tab="vencimentos">
-        <span>Vencimentos</span>
-        <span class="tab-count" id="tabCountVencimentos">0</span>
-      </button>
-    </nav>
-
-    <div id="globalAlert" class="alert" style="margin-top: 0; margin-bottom: 20px;"></div>
-
-    <!-- ABA 1: CLIENTES -->
+    <!-- ABA: CLIENTES -->
     <section id="panel-clientes" class="tab-panel active">
       <div class="card">
-        <div class="card-head">
-          <h2>Carteira de Clientes por Oficina</h2>
-          <div class="filters">
+        <div class="card-header">
+          <div>
+            <h3>Contas Cadastradas &amp; Presença</h3>
+            <small>Presença online baseada em <code>online</code> + <code>ultimoVisto</code> gravados pelo sistema da oficina</small>
+          </div>
+          <div class="toolbar">
+            <select id="filtroPresenca">
+              <option value="">Online e Offline</option>
+              <option value="online">Apenas Online</option>
+              <option value="offline">Apenas Offline</option>
+            </select>
             <select id="filtroOficina">
               <option value="">Todas as oficinas</option>
             </select>
             <select id="filtroStatus">
               <option value="">Todos os status</option>
-              <option value="ativo">Apenas ativos</option>
-              <option value="inativo">Apenas desativados</option>
+              <option value="ativo">Ativos</option>
+              <option value="inativo">Bloqueados</option>
             </select>
-            <input type="text" id="buscaCliente" placeholder="Buscar nome, e-mail ou idOficina..." />
+            <input type="text" id="buscaCliente" placeholder="Buscar nome, e-mail, oficina..." />
           </div>
         </div>
 
-        <div class="table-wrap">
+        <div class="table-box">
           <table>
             <thead>
               <tr>
                 <th>Cliente</th>
+                <th>Presença</th>
                 <th>Contato &amp; Endereço</th>
-                <th>Oficina (Isolamento)</th>
-                <th>Ativação</th>
+                <th>Oficina / Plano</th>
                 <th>Vencimento</th>
                 <th>Status</th>
                 <th>Ações</th>
               </tr>
             </thead>
             <tbody id="clientesTbody">
-              <tr>
-                <td colspan="7" style="color: rgba(236, 253, 245, 0.65);">Carregando clientes...</td>
-              </tr>
+              <tr><td colspan="7" style="color: var(--text-soft);">Carregando clientes...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </section>
 
-    <!-- ABA 2: CADASTRO -->
+    <!-- ABA: CADASTRO -->
     <section id="panel-cadastro" class="tab-panel">
       <div class="card">
-        <div class="card-head">
-          <h2>Novo Cliente &amp; Vinculação de Oficina</h2>
-          <span>Cria o usuário no Firebase Auth, registra em <code>oficinas/{idOficina}</code> e salva em <code>usuarios/{uid}</code></span>
+        <div class="card-header">
+          <div>
+            <h3>Provisionar Novo Cliente &amp; Oficina</h3>
+            <small>Cria login no Auth, registra em <code>oficinas/{idOficina}</code> e vincula em <code>usuarios/{uid}</code></small>
+          </div>
         </div>
 
         <form id="clientForm" class="form-grid">
@@ -662,7 +868,7 @@
           </div>
 
           <div class="field">
-            <label for="email">E-mail de Acesso</label>
+            <label for="email">E-mail de Login</label>
             <input type="email" id="email" required placeholder="cliente@oficina.com" />
           </div>
 
@@ -678,9 +884,9 @@
 
           <div class="field">
             <label for="idOficina">ID Único da Oficina (idOficina)</label>
-            <div class="inline-row">
+            <div class="inline-group">
               <input type="text" id="idOficina" required placeholder="Ex.: oficina_001" />
-              <button type="button" class="btn-ghost" id="btnGerarIdOficina">Gerar ID</button>
+              <button type="button" class="btn btn-secondary" id="btnGerarIdOficina">Gerar ID</button>
             </div>
           </div>
 
@@ -692,10 +898,15 @@
           <div class="field">
             <label for="plano">Plano</label>
             <select id="plano">
-              <option value="mensal" selected>mensal</option>
-              <option value="trimestral">trimestral</option>
-              <option value="anual">anual</option>
+              <option value="mensal" selected>Mensal</option>
+              <option value="trimestral">Trimestral</option>
+              <option value="anual">Anual</option>
             </select>
+          </div>
+
+          <div class="field">
+            <label for="valorMensal">Valor Base / Parcela (R$)</label>
+            <input type="number" id="valorMensal" step="0.01" min="0" value="99.90" required />
           </div>
 
           <div class="field">
@@ -717,64 +928,236 @@
           </div>
 
           <div class="field">
-            <label>Status Inicial do Acesso</label>
-            <div class="toggle-box">
+            <label>Acesso Imediato</label>
+            <div class="toggle-card">
               <input type="checkbox" id="ativo" checked />
-              <label for="ativo" id="ativoLabel" style="color: #34d399; font-weight: 700; cursor: pointer;">
+              <label for="ativo" id="ativoLabel" style="color: var(--accent-bright); cursor: pointer;">
                 Ativo (ativo / ativa: true)
               </label>
             </div>
           </div>
 
-          <div class="field full" style="margin-top: 4px;">
-            <button type="submit" class="btn-primary" id="btnCadastrar">
-              Cadastrar Cliente e Ativar Oficina
+          <div class="field full" style="margin-top: 6px;">
+            <button type="submit" class="btn btn-primary" id="btnCadastrar">
+              Criar Conta e Liberar Acesso
             </button>
           </div>
         </form>
-
-        <div id="formFeedback" class="alert"></div>
       </div>
     </section>
 
-    <!-- ABA 3: VENCIMENTOS -->
+    <!-- ABA: VENCIMENTOS -->
     <section id="panel-vencimentos" class="tab-panel">
       <div class="card">
-        <div class="card-head">
-          <h2>Controle de Vencimentos e Renovações</h2>
-          <div class="filters">
+        <div class="card-header">
+          <div>
+            <h3>Gestão de Vencimentos &amp; Cobrança</h3>
+            <small>Ordenado dos vencimentos mais próximos ou expirados para os mais distantes</small>
+          </div>
+          <div class="toolbar">
             <select id="filtroVencimento">
-              <option value="todos">Todos com vencimento</option>
+              <option value="todos">Todos os prazos</option>
               <option value="vencidos">Vencidos</option>
               <option value="proximos">Vencendo em até 5 dias</option>
-              <option value="em_dia">Em dia (mais de 5 dias)</option>
+              <option value="em_dia">Em dia</option>
             </select>
-            <input type="text" id="buscaVencimento" placeholder="Buscar cliente ou oficina..." />
+            <input type="text" id="buscaVencimento" placeholder="Filtrar cliente ou oficina..." />
           </div>
         </div>
 
-        <div class="table-wrap">
+        <div class="table-box">
           <table>
             <thead>
               <tr>
                 <th>Cliente</th>
-                <th>Oficina (idOficina)</th>
-                <th>Data de Vencimento</th>
-                <th>Situação do Prazo</th>
-                <th>Status da Conta</th>
-                <th>Renovação &amp; Acesso</th>
+                <th>Oficina</th>
+                <th>Vencimento</th>
+                <th>Prazo</th>
+                <th>Status</th>
+                <th>Ações Rápidas</th>
               </tr>
             </thead>
             <tbody id="vencimentosTbody">
-              <tr>
-                <td colspan="6" style="color: rgba(236, 253, 245, 0.65);">Carregando vencimentos...</td>
-              </tr>
+              <tr><td colspan="6" style="color: var(--text-soft);">Carregando vencimentos...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
     </section>
+
+    <!-- ABA: FINANCEIRO -->
+    <section id="panel-financeiro" class="tab-panel">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3>Resumo Financeiro &amp; Receita Recorrente</h3>
+            <small>Ajuste os valores padrão por plano caso o cliente não tenha valor individual salvo</small>
+          </div>
+          <div class="toolbar">
+            <label style="display:flex;align-items:center;gap:6px;">
+              Mensal R$
+              <input type="number" id="precoMensalPadrao" step="0.01" min="0" value="99.90" style="width:105px;min-width:unset;" />
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;">
+              Trimestral R$
+              <input type="number" id="precoTrimestralPadrao" step="0.01" min="0" value="269.70" style="width:110px;min-width:unset;" />
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;">
+              Anual R$
+              <input type="number" id="precoAnualPadrao" step="0.01" min="0" value="999.00" style="width:110px;min-width:unset;" />
+            </label>
+          </div>
+        </div>
+
+        <div class="fin-summary-bar">
+          <div class="fin-box">
+            <small>MRR (Receita Mensal Recorrente)</small>
+            <strong id="finMrr" style="color: var(--accent-bright);">R$ 0,00</strong>
+          </div>
+          <div class="fin-box">
+            <small>Previsão Bruta (Contas Ativas)</small>
+            <strong id="finPrevisto">R$ 0,00</strong>
+          </div>
+          <div class="fin-box">
+            <small>Em Atraso / Vencido</small>
+            <strong id="finVencido" style="color: #fca5a5;">R$ 0,00</strong>
+          </div>
+          <div class="fin-box">
+            <small>Vencendo em até 5 Dias</small>
+            <strong id="finProximo" style="color: #fcd34d;">R$ 0,00</strong>
+          </div>
+        </div>
+
+        <div class="table-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente / Oficina</th>
+                <th>Plano</th>
+                <th>Valor</th>
+                <th>Vencimento</th>
+                <th>Situação Financeira</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+            <tbody id="financeiroTbody">
+              <tr><td colspan="6" style="color: var(--text-soft);">Carregando financeiro...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3>Histórico de Pagamentos Registrados</h3>
+            <small>Baixas manuais lançadas pelo painel em <code>pagamentos_saas</code></small>
+          </div>
+        </div>
+        <div class="table-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Data</th>
+                <th>Cliente</th>
+                <th>Oficina (idOficina)</th>
+                <th>Plano</th>
+                <th>Valor Pago</th>
+                <th>Novo Vencimento</th>
+              </tr>
+            </thead>
+            <tbody id="pagamentosTbody">
+              <tr><td colspan="6" style="color: var(--text-soft);">Nenhum pagamento registrado ainda.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA: OFICINAS -->
+    <section id="panel-oficinas" class="tab-panel">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <h3>Ambientes Isolados (Tenants / Oficinas)</h3>
+            <small>Resumo de cada <code>idOficina</code> ativo e presença online na plataforma</small>
+          </div>
+        </div>
+
+        <div class="table-box">
+          <table>
+            <thead>
+              <tr>
+                <th>Nome da Oficina</th>
+                <th>Identificador (idOficina)</th>
+                <th>Usuários</th>
+                <th>Online Agora</th>
+                <th>Status da Oficina</th>
+              </tr>
+            </thead>
+            <tbody id="oficinasTbody">
+              <tr><td colspan="5" style="color: var(--text-soft);">Carregando oficinas...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL EDIÇÃO -->
+  <div class="modal-backdrop" id="editModalBackdrop">
+    <div class="modal">
+      <div class="modal-head">
+        <h3>Editar Cliente</h3>
+        <button type="button" class="btn-xs btn-xs-neutral" onclick="fecharModalEdicao()">Fechar</button>
+      </div>
+      <form id="editForm" class="form-grid">
+        <input type="hidden" id="editUid" />
+        <div class="field">
+          <label for="editNome">Nome Completo</label>
+          <input type="text" id="editNome" required />
+        </div>
+        <div class="field">
+          <label for="editTelefone">Telefone / WhatsApp</label>
+          <input type="tel" id="editTelefone" required />
+        </div>
+        <div class="field full">
+          <label for="editEndereco">Endereço</label>
+          <input type="text" id="editEndereco" required />
+        </div>
+        <div class="field">
+          <label for="editIdOficina">idOficina</label>
+          <input type="text" id="editIdOficina" required />
+        </div>
+        <div class="field">
+          <label for="editNomeOficina">Nome da Oficina</label>
+          <input type="text" id="editNomeOficina" required />
+        </div>
+        <div class="field">
+          <label for="editPlano">Plano</label>
+          <select id="editPlano">
+            <option value="mensal">mensal</option>
+            <option value="trimestral">trimestral</option>
+            <option value="anual">anual</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="editValorMensal">Valor (R$)</label>
+          <input type="number" id="editValorMensal" step="0.01" min="0" required />
+        </div>
+        <div class="field">
+          <label for="editDataVencimento">Data de Vencimento</label>
+          <input type="date" id="editDataVencimento" required />
+        </div>
+        <div class="field full" style="display:flex;justify-content:flex-end;gap:10px;margin-top:6px;">
+          <button type="button" class="btn btn-secondary" onclick="fecharModalEdicao()">Cancelar</button>
+          <button type="submit" class="btn btn-primary" id="btnSalvarEdicao">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
   </div>
+
+  <div id="toast" class="toast"></div>
 
   <script type="module">
     import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -786,6 +1169,7 @@
     import {
       getFirestore,
       collection,
+      addDoc,
       doc,
       setDoc,
       updateDoc,
@@ -811,28 +1195,38 @@
       : initializeApp(firebaseConfig, "SecondaryAuth");
     const secondaryAuth = getAuth(secondaryApp);
 
-    // Abas
-    const tabButtons = document.querySelectorAll(".tab-btn");
-    const tabPanels = document.querySelectorAll(".tab-panel");
-    const tabCountClientes = document.getElementById("tabCountClientes");
-    const tabCountVencimentos = document.getElementById("tabCountVencimentos");
+    const titulosAbas = {
+      clientes: ["Carteira de Clientes", "Gerencie contas, presença online/offline e isolamento por oficina."],
+      cadastro: ["Novo Cadastro", "Crie o acesso no Firebase Authentication e vincule a um idOficina exclusivo."],
+      vencimentos: ["Controle de Vencimentos", "Acompanhe prazos, envie cobrança no WhatsApp e renove assinaturas."],
+      financeiro: ["Financeiro SaaS", "Acompanhe MRR, pendências, registre pagamentos e renove ciclos."],
+      oficinas: ["Oficinas (Tenants)", "Visão consolidada de cada oficina isolada no banco de dados."]
+    };
 
-    function ativarAba(nomeAba) {
-      tabButtons.forEach((btn) => {
-        btn.classList.toggle("active", btn.dataset.tab === nomeAba);
-      });
-      tabPanels.forEach((panel) => {
-        panel.classList.toggle("active", panel.id === `panel-${nomeAba}`);
-      });
-    }
+    window.mudarAba = (nomeAba) => {
+      document.querySelectorAll(".nav-btn").forEach((b) => b.classList.toggle("active", b.dataset.tab === nomeAba));
+      document.querySelectorAll(".tab-panel").forEach((p) => p.classList.toggle("active", p.id === `panel-${nomeAba}`));
+      const [t, s] = titulosAbas[nomeAba] || ["Painel", ""];
+      document.getElementById("headerTitle").textContent = t;
+      document.getElementById("headerSubtitle").textContent = s;
+    };
 
-    tabButtons.forEach((btn) => {
-      btn.addEventListener("click", () => ativarAba(btn.dataset.tab));
+    document.querySelectorAll(".nav-btn").forEach((btn) => {
+      btn.addEventListener("click", () => window.mudarAba(btn.dataset.tab));
     });
 
-    const globalAlert = document.getElementById("globalAlert");
+    const toastEl = document.getElementById("toast");
+    let toastTimer = null;
+    function notificar(tipo, msg) {
+      toastEl.className = `toast ${tipo}`;
+      toastEl.textContent = msg;
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toastEl.className = "toast";
+      }, 4500);
+    }
+
     const clientForm = document.getElementById("clientForm");
-    const formFeedback = document.getElementById("formFeedback");
     const btnCadastrar = document.getElementById("btnCadastrar");
     const btnGerarIdOficina = document.getElementById("btnGerarIdOficina");
     const idOficinaInput = document.getElementById("idOficina");
@@ -844,6 +1238,7 @@
 
     const clientesTbody = document.getElementById("clientesTbody");
     const buscaClienteInput = document.getElementById("buscaCliente");
+    const filtroPresencaSelect = document.getElementById("filtroPresenca");
     const filtroOficinaSelect = document.getElementById("filtroOficina");
     const filtroStatusSelect = document.getElementById("filtroStatus");
 
@@ -851,12 +1246,64 @@
     const filtroVencimentoSelect = document.getElementById("filtroVencimento");
     const buscaVencimentoInput = document.getElementById("buscaVencimento");
 
-    const kpiTotal = document.getElementById("kpiTotal");
-    const kpiAtivos = document.getElementById("kpiAtivos");
-    const kpiOficinas = document.getElementById("kpiOficinas");
-    const kpiVencimento = document.getElementById("kpiVencimento");
+    const financeiroTbody = document.getElementById("financeiroTbody");
+    const pagamentosTbody = document.getElementById("pagamentosTbody");
+    const oficinasTbody = document.getElementById("oficinasTbody");
+
+    const precoMensalPadrao = document.getElementById("precoMensalPadrao");
+    const precoTrimestralPadrao = document.getElementById("precoTrimestralPadrao");
+    const precoAnualPadrao = document.getElementById("precoAnualPadrao");
 
     let cacheClientes = [];
+    let cachePagamentos = [];
+
+    function formatBRL(num) {
+      return Number(num || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+    }
+
+    function obterValorPlano(cli) {
+      if (typeof cli.valorMensal === "number" && !Number.isNaN(cli.valorMensal) && cli.valorMensal > 0) {
+        return cli.valorMensal;
+      }
+      const plano = (cli.plano || "mensal").toLowerCase();
+      if (plano === "trimestral") return Number(precoTrimestralPadrao.value || 269.7);
+      if (plano === "anual") return Number(precoAnualPadrao.value || 999);
+      return Number(precoMensalPadrao.value || 99.9);
+    }
+
+    function obterValorMensalEquivalente(cli) {
+      const valor = obterValorPlano(cli);
+      const plano = (cli.plano || "mensal").toLowerCase();
+      if (plano === "trimestral") return valor / 3;
+      if (plano === "anual") return valor / 12;
+      return valor;
+    }
+
+    function mesesDoPlano(plano) {
+      const p = (plano || "mensal").toLowerCase();
+      if (p === "trimestral") return 3;
+      if (p === "anual") return 12;
+      return 1;
+    }
+
+    function avaliarPresenca(cli) {
+      const dtVisto = cli.ultimoVisto?.toDate ? cli.ultimoVisto.toDate() : null;
+      const agoraMs = Date.now();
+      const recente = dtVisto ? (agoraMs - dtVisto.getTime()) <= 75000 : false;
+      const isOnline = Boolean(cli.online) && recente;
+
+      if (isOnline) {
+        return { online: true, texto: "Online", detalhe: "Ativo agora" };
+      }
+      if (dtVisto) {
+        return {
+          online: false,
+          texto: "Offline",
+          detalhe: `Visto ${dtVisto.toLocaleString("pt-BR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })}`
+        };
+      }
+      return { online: false, texto: "Offline", detalhe: "Sem registro" };
+    }
 
     function gerarIdOficinaUnico() {
       const baseNome = (nomeOficinaInput.value || "oficina")
@@ -873,16 +1320,6 @@
     btnGerarIdOficina.addEventListener("click", () => {
       idOficinaInput.value = gerarIdOficinaUnico();
     });
-
-    function showAlert(el, type, message) {
-      el.className = `alert ${type}`;
-      el.textContent = message;
-    }
-
-    function clearAlert(el) {
-      el.className = "alert";
-      el.textContent = "";
-    }
 
     function parseDateInput(yyyyMmDd) {
       const [y, m, d] = yyyyMmDd.split("-").map(Number);
@@ -901,20 +1338,18 @@
       return dateObj.toLocaleDateString("pt-BR");
     }
 
-    function calcularProximoVencimento(dataAtivacaoDate) {
-      const ano = dataAtivacaoDate.getFullYear();
-      const mesAlvo = dataAtivacaoDate.getMonth() + 1;
-      const diaOriginal = dataAtivacaoDate.getDate();
-
+    function adicionarMeses(dataBase, meses) {
+      const ano = dataBase.getFullYear();
+      const mesAlvo = dataBase.getMonth() + meses;
+      const diaOriginal = dataBase.getDate();
       const ultimoDiaMesAlvo = new Date(ano, mesAlvo + 1, 0).getDate();
       const diaFinal = Math.min(diaOriginal, ultimoDiaMesAlvo);
-
       return new Date(ano, mesAlvo, diaFinal, 23, 59, 59);
     }
 
     function classificarVencimento(dtVenc) {
       if (!(dtVenc instanceof Date) || Number.isNaN(dtVenc.getTime())) {
-        return { categoria: "sem_data", label: "Sem data", badgeClass: "", diasDiff: null };
+        return { categoria: "sem_data", label: "Sem data", badgeClass: "ok" };
       }
       const agora = new Date();
       const diffMs = dtVenc.getTime() - agora.getTime();
@@ -923,24 +1358,21 @@
       if (dtVenc < agora) {
         return {
           categoria: "vencidos",
-          label: `Vencido há ${Math.max(1, Math.abs(diasDiff))} dia(s)`,
-          badgeClass: "inativo",
-          diasDiff
+          label: `Vencido há ${Math.max(1, Math.abs(diasDiff))}d`,
+          badgeClass: "err"
         };
       }
       if (diasDiff <= 5) {
         return {
           categoria: "proximos",
-          label: diasDiff === 0 ? "Vence hoje" : `Vence em ${diasDiff} dia(s)`,
-          badgeClass: "vencendo",
-          diasDiff
+          label: diasDiff === 0 ? "Vence hoje" : `Vence em ${diasDiff}d`,
+          badgeClass: "warn"
         };
       }
       return {
         categoria: "em_dia",
-        label: `Em dia (${diasDiff} dias)`,
-        badgeClass: "ativo",
-        diasDiff
+        label: `Em dia (${diasDiff}d)`,
+        badgeClass: "ok"
       };
     }
 
@@ -950,22 +1382,21 @@
         return;
       }
       const ativacao = parseDateInput(dataAtivacaoInput.value);
-      const vencimento = calcularProximoVencimento(ativacao);
+      const vencimento = adicionarMeses(ativacao, 1);
       vencimentoPreview.value = `${formatDateBR(vencimento)} (Dia ${vencimento.getDate()})`;
     }
 
     function atualizarVisualStatusCheckbox() {
       if (ativoCheckbox.checked) {
         ativoLabel.textContent = "Ativo (ativo / ativa: true)";
-        ativoLabel.style.color = "#34d399";
+        ativoLabel.style.color = "var(--accent-bright)";
       } else {
         ativoLabel.textContent = "Desativado (ativo / ativa: false)";
         ativoLabel.style.color = "#fca5a5";
       }
     }
 
-    const hoje = new Date();
-    dataAtivacaoInput.value = formatDateInput(hoje);
+    dataAtivacaoInput.value = formatDateInput(new Date());
     atualizarPreviewVencimento();
     atualizarVisualStatusCheckbox();
 
@@ -974,10 +1405,8 @@
 
     clientForm.addEventListener("submit", async (e) => {
       e.preventDefault();
-      clearAlert(formFeedback);
-      clearAlert(globalAlert);
       btnCadastrar.disabled = true;
-      btnCadastrar.textContent = "Cadastrando...";
+      btnCadastrar.textContent = "Provisionando...";
 
       const nome = document.getElementById("nome").value.trim();
       const telefone = document.getElementById("telefone").value.trim();
@@ -987,6 +1416,7 @@
       const idOficina = idOficinaInput.value.trim();
       const nomeOficina = nomeOficinaInput.value.trim();
       const plano = document.getElementById("plano").value;
+      const valorMensal = Number(document.getElementById("valorMensal").value || 0);
       const role = document.getElementById("role").value;
       const dataAtivacaoStr = dataAtivacaoInput.value;
       const ativo = ativoCheckbox.checked;
@@ -997,7 +1427,7 @@
         await signOut(secondaryAuth);
 
         const dataAtivacaoDate = parseDateInput(dataAtivacaoStr);
-        const dataVencimentoDate = calcularProximoVencimento(dataAtivacaoDate);
+        const dataVencimentoDate = adicionarMeses(dataAtivacaoDate, mesesDoPlano(plano));
 
         await setDoc(doc(db, "oficinas", idOficina), {
           idOficina,
@@ -1014,10 +1444,12 @@
           email,
           role,
           plano,
+          valorMensal,
           idOficina,
           nomeOficina,
           ativo,
           ativa: ativo,
+          online: false,
           diaAtivacao: dataAtivacaoDate.getDate(),
           diaVencimento: dataVencimentoDate.getDate(),
           dataAtivacao: Timestamp.fromDate(dataAtivacaoDate),
@@ -1028,6 +1460,7 @@
 
         clientForm.reset();
         document.getElementById("plano").value = "mensal";
+        document.getElementById("valorMensal").value = "99.90";
         document.getElementById("role").value = "cliente";
         idOficinaInput.value = idOficina;
         nomeOficinaInput.value = nomeOficina;
@@ -1036,16 +1469,13 @@
         atualizarVisualStatusCheckbox();
         atualizarPreviewVencimento();
 
-        showAlert(
-          formFeedback,
-          "ok",
-          `Cliente "${nome}" criado e vinculado ao idOficina "${idOficina}" (${nomeOficina}). Próximo vencimento: ${formatDateBR(dataVencimentoDate)}.`
-        );
+        notificar("ok", `Cliente "${nome}" cadastrado na oficina "${nomeOficina}".`);
+        window.mudarAba("clientes");
       } catch (err) {
-        showAlert(formFeedback, "err", `Erro ao cadastrar cliente: ${err.message}`);
+        notificar("err", `Erro ao cadastrar: ${err.message}`);
       } finally {
         btnCadastrar.disabled = false;
-        btnCadastrar.textContent = "Cadastrar Cliente e Ativar Oficina";
+        btnCadastrar.textContent = "Criar Conta e Liberar Acesso";
       }
     });
 
@@ -1062,19 +1492,17 @@
             atualizadoEm: serverTimestamp()
           }, { merge: true });
         }
-        showAlert(globalAlert, "ok", `Status do cliente atualizado para ${novoStatus ? "Ativo" : "Desativado"}.`);
+        notificar("ok", `Acesso ${novoStatus ? "liberado" : "bloqueado"} com sucesso.`);
       } catch (err) {
-        showAlert(globalAlert, "err", `Erro ao atualizar status: ${err.message}`);
+        notificar("err", `Erro ao atualizar status: ${err.message}`);
       }
     };
 
     window.renovarMaisUmMes = async (uid, vencAtualMs) => {
       try {
         const baseDate = vencAtualMs ? new Date(vencAtualMs) : new Date();
-        if (baseDate < new Date()) {
-          baseDate.setTime(new Date().getTime());
-        }
-        const novoVenc = calcularProximoVencimento(baseDate);
+        if (baseDate < new Date()) baseDate.setTime(new Date().getTime());
+        const novoVenc = adicionarMeses(baseDate, 1);
         await updateDoc(doc(db, "usuarios", uid), {
           ativo: true,
           ativa: true,
@@ -1082,124 +1510,298 @@
           dataVencimento: Timestamp.fromDate(novoVenc),
           atualizadoEm: serverTimestamp()
         });
-        showAlert(globalAlert, "ok", `Vencimento renovado para ${formatDateBR(novoVenc)} e acesso ativado.`);
+        notificar("ok", `Assinatura renovada até ${formatDateBR(novoVenc)}.`);
       } catch (err) {
-        showAlert(globalAlert, "err", `Erro ao renovar vencimento: ${err.message}`);
+        notificar("err", `Erro ao renovar: ${err.message}`);
       }
     };
 
-    window.copiarIdOficina = async (idOficina) => {
-      if (!idOficina) return;
+    window.registrarPagamentoERenovar = async (uid) => {
+      const cli = cacheClientes.find((c) => (c.uid || c.id) === uid);
+      if (!cli) return;
+
       try {
-        await navigator.clipboard.writeText(idOficina);
-        showAlert(globalAlert, "ok", `idOficina "${idOficina}" copiado para a área de transferência.`);
-      } catch {
-        showAlert(globalAlert, "ok", `idOficina: ${idOficina}`);
+        const valor = obterValorPlano(cli);
+        const meses = mesesDoPlano(cli.plano);
+        const dtVencAtual = cli.dataVencimento?.toDate ? cli.dataVencimento.toDate() : new Date();
+        const baseDate = dtVencAtual > new Date() ? dtVencAtual : new Date();
+        const novoVenc = adicionarMeses(baseDate, meses);
+
+        await updateDoc(doc(db, "usuarios", uid), {
+          ativo: true,
+          ativa: true,
+          diaVencimento: novoVenc.getDate(),
+          dataVencimento: Timestamp.fromDate(novoVenc),
+          atualizadoEm: serverTimestamp()
+        });
+
+        if (cli.idOficina) {
+          await setDoc(doc(db, "oficinas", cli.idOficina), {
+            ativa: true,
+            atualizadoEm: serverTimestamp()
+          }, { merge: true });
+        }
+
+        await addDoc(collection(db, "pagamentos_saas"), {
+          uid,
+          nome: cli.nome || "",
+          email: cli.email || "",
+          idOficina: cli.idOficina || "",
+          nomeOficina: cli.nomeOficina || "",
+          plano: cli.plano || "mensal",
+          valor,
+          novoVencimento: Timestamp.fromDate(novoVenc),
+          pagoEm: serverTimestamp()
+        });
+
+        notificar("ok", `Pagamento de ${formatBRL(valor)} registrado. Novo vencimento: ${formatDateBR(novoVenc)}.`);
+      } catch (err) {
+        notificar("err", `Erro ao registrar pagamento: ${err.message}`);
       }
     };
 
-    function atualizarKpisEAbas(lista) {
-      const total = lista.length;
-      const ativos = lista.filter((c) => Boolean(c.ativo ?? c.ativa)).length;
-      const oficinasSet = new Set(lista.map((c) => c.idOficina).filter(Boolean));
+    window.copiarTexto = async (txt) => {
+      if (!txt) return;
+      try {
+        await navigator.clipboard.writeText(txt);
+        notificar("ok", `Copiado: ${txt}`);
+      } catch {
+        notificar("ok", txt);
+      }
+    };
 
+    window.cobrarWhatsApp = (nome, telefone, nomeOficina, dataVencStr) => {
+      const fone = String(telefone || "").replace(/\D/g, "");
+      if (!fone) {
+        notificar("err", "Cliente sem telefone cadastrado.");
+        return;
+      }
+      const foneBR = fone.startsWith("55") ? fone : `55${fone}`;
+      const texto = encodeURIComponent(
+        `Olá ${nome}, tudo bem? Passando para lembrar sobre a assinatura do sistema *Nexus Oficina* (${nomeOficina}), com vencimento em *${dataVencStr}*. Qualquer dúvida estou à disposição!`
+      );
+      window.open(`https://wa.me/${foneBR}?text=${texto}`, "_blank");
+    };
+
+    // Modal Edição
+    const editModalBackdrop = document.getElementById("editModalBackdrop");
+    const editForm = document.getElementById("editForm");
+
+    window.abrirModalEdicao = (uid) => {
+      const cli = cacheClientes.find((c) => (c.uid || c.id) === uid);
+      if (!cli) return;
+      document.getElementById("editUid").value = uid;
+      document.getElementById("editNome").value = cli.nome || "";
+      document.getElementById("editTelefone").value = cli.telefone || "";
+      document.getElementById("editEndereco").value = cli.endereco || "";
+      document.getElementById("editIdOficina").value = cli.idOficina || "";
+      document.getElementById("editNomeOficina").value = cli.nomeOficina || "";
+      document.getElementById("editPlano").value = cli.plano || "mensal";
+      document.getElementById("editValorMensal").value = String(obterValorPlano(cli));
+      const dtVenc = cli.dataVencimento?.toDate ? cli.dataVencimento.toDate() : new Date();
+      document.getElementById("editDataVencimento").value = formatDateInput(dtVenc);
+      editModalBackdrop.classList.add("open");
+    };
+
+    window.fecharModalEdicao = () => {
+      editModalBackdrop.classList.remove("open");
+    };
+
+    editForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const uid = document.getElementById("editUid").value;
+      const nome = document.getElementById("editNome").value.trim();
+      const telefone = document.getElementById("editTelefone").value.trim();
+      const endereco = document.getElementById("editEndereco").value.trim();
+      const idOficina = document.getElementById("editIdOficina").value.trim();
+      const nomeOficina = document.getElementById("editNomeOficina").value.trim();
+      const plano = document.getElementById("editPlano").value;
+      const valorMensal = Number(document.getElementById("editValorMensal").value || 0);
+      const dtVenc = parseDateInput(document.getElementById("editDataVencimento").value);
+      dtVenc.setHours(23, 59, 59);
+
+      try {
+        await updateDoc(doc(db, "usuarios", uid), {
+          nome,
+          telefone,
+          endereco,
+          idOficina,
+          nomeOficina,
+          plano,
+          valorMensal,
+          diaVencimento: dtVenc.getDate(),
+          dataVencimento: Timestamp.fromDate(dtVenc),
+          atualizadoEm: serverTimestamp()
+        });
+        await setDoc(doc(db, "oficinas", idOficina), {
+          idOficina,
+          nomeOficina,
+          atualizadoEm: serverTimestamp()
+        }, { merge: true });
+
+        window.fecharModalEdicao();
+        notificar("ok", `Cadastro de "${nome}" atualizado.`);
+      } catch (err) {
+        notificar("err", `Erro ao salvar edição: ${err.message}`);
+      }
+    });
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function atualizarResumo(lista) {
+      const total = lista.length;
+      const ativosList = lista.filter((c) => Boolean(c.ativo ?? c.ativa));
+      const onlineList = lista.filter((c) => avaliarPresenca(c).online);
+
+      const oficinasMap = new Map();
       let alertaVenc = 0;
+      let mrr = 0;
+      let previsto = 0;
+      let totalVencido = 0;
+      let totalProximo = 0;
+
       lista.forEach((c) => {
+        const isAtivo = Boolean(c.ativo ?? c.ativa);
+        const pres = avaliarPresenca(c);
         const dtVenc = c.dataVencimento?.toDate ? c.dataVencimento.toDate() : null;
         const info = classificarVencimento(dtVenc);
+        const valor = obterValorPlano(c);
+
+        if (c.idOficina) {
+          const item = oficinasMap.get(c.idOficina) || {
+            idOficina: c.idOficina,
+            nomeOficina: c.nomeOficina || c.idOficina,
+            total: 0,
+            ativos: 0,
+            online: 0
+          };
+          item.total += 1;
+          if (isAtivo) item.ativos += 1;
+          if (pres.online) item.online += 1;
+          oficinasMap.set(c.idOficina, item);
+        }
+
+        if (isAtivo) {
+          mrr += obterValorMensalEquivalente(c);
+          previsto += valor;
+        }
         if (info.categoria === "vencidos" || info.categoria === "proximos") {
           alertaVenc += 1;
         }
-      });
-
-      kpiTotal.textContent = String(total);
-      kpiAtivos.textContent = String(ativos);
-      kpiOficinas.textContent = String(oficinasSet.size);
-      kpiVencimento.textContent = String(alertaVenc);
-
-      tabCountClientes.textContent = String(total);
-      tabCountVencimentos.textContent = String(alertaVenc);
-    }
-
-    function atualizarFiltroOficinas(lista) {
-      const atual = filtroOficinaSelect.value;
-      const oficinasMap = new Map();
-      lista.forEach((c) => {
-        if (c.idOficina) {
-          oficinasMap.set(c.idOficina, c.nomeOficina || c.idOficina);
+        if (info.categoria === "vencidos") {
+          totalVencido += valor;
+        } else if (info.categoria === "proximos") {
+          totalProximo += valor;
         }
       });
 
-      const opcoes = [`<option value="">Todas as oficinas (${oficinasMap.size})</option>`];
-      for (const [idOf, nomeOf] of oficinasMap.entries()) {
-        opcoes.push(`<option value="${escapeHtml(idOf)}">${escapeHtml(nomeOf)} (${escapeHtml(idOf)})</option>`);
+      document.getElementById("kpiOnline").textContent = String(onlineList.length);
+      document.getElementById("kpiAtivos").textContent = String(ativosList.length);
+      document.getElementById("kpiTotal").textContent = String(total);
+      document.getElementById("kpiOficinas").textContent = String(oficinasMap.size);
+      document.getElementById("kpiVenc").textContent = String(alertaVenc);
+      document.getElementById("kpiMrr").textContent = formatBRL(mrr);
+
+      document.getElementById("navCountClientes").textContent = String(total);
+      document.getElementById("navCountVenc").textContent = String(alertaVenc);
+      document.getElementById("navCountOficinas").textContent = String(oficinasMap.size);
+      document.getElementById("navPillMrr").textContent = formatBRL(mrr);
+
+      document.getElementById("finMrr").textContent = formatBRL(mrr);
+      document.getElementById("finPrevisto").textContent = formatBRL(previsto);
+      document.getElementById("finVencido").textContent = formatBRL(totalVencido);
+      document.getElementById("finProximo").textContent = formatBRL(totalProximo);
+
+      const atual = filtroOficinaSelect.value;
+      const opts = [`<option value="">Todas as oficinas (${oficinasMap.size})</option>`];
+      for (const [idOf, obj] of oficinasMap.entries()) {
+        opts.push(`<option value="${escapeHtml(idOf)}">${escapeHtml(obj.nomeOficina)} (${escapeHtml(idOf)})</option>`);
       }
-      filtroOficinaSelect.innerHTML = opcoes.join("");
-      if (atual && oficinasMap.has(atual)) {
-        filtroOficinaSelect.value = atual;
+      filtroOficinaSelect.innerHTML = opts.join("");
+      if (atual && oficinasMap.has(atual)) filtroOficinaSelect.value = atual;
+
+      const oficinasArr = Array.from(oficinasMap.values());
+      if (!oficinasArr.length) {
+        oficinasTbody.innerHTML = `<tr><td colspan="5" style="color: var(--text-soft);">Nenhuma oficina vinculada ainda.</td></tr>`;
+      } else {
+        oficinasTbody.innerHTML = oficinasArr.map((of) => `
+          <tr>
+            <td style="font-weight: 700;">${escapeHtml(of.nomeOficina)}</td>
+            <td><span class="mono-chip" onclick="copiarTexto('${escapeHtml(of.idOficina)}')">${escapeHtml(of.idOficina)}</span></td>
+            <td>${of.total} usuário(s) (${of.ativos} ativo(s))</td>
+            <td>
+              <span class="badge ${of.online > 0 ? "ok" : "offline"}">
+                <span class="${of.online > 0 ? "dot-live" : "dot-offline"}"></span>
+                ${of.online} online
+              </span>
+            </td>
+            <td>
+              <span class="badge ${of.ativos > 0 ? "ok" : "err"}">
+                ${of.ativos > 0 ? "● Operacional" : "● Suspensa"}
+              </span>
+            </td>
+          </tr>
+        `).join("");
       }
     }
 
-    function renderTabelaClientes(lista) {
+    function renderClientes(lista) {
       if (!lista.length) {
-        clientesTbody.innerHTML = `<tr><td colspan="7" style="color: rgba(236, 253, 245, 0.65);">Nenhum cliente encontrado para o filtro atual.</td></tr>`;
+        clientesTbody.innerHTML = `<tr><td colspan="7" style="color: var(--text-soft);">Nenhum cliente encontrado.</td></tr>`;
         return;
       }
 
       clientesTbody.innerHTML = lista.map((cli) => {
-        const dtAtiv = cli.dataAtivacao?.toDate ? cli.dataAtivacao.toDate() : null;
         const dtVenc = cli.dataVencimento?.toDate ? cli.dataVencimento.toDate() : null;
         const isAtivo = Boolean(cli.ativo ?? cli.ativa);
         const uidDoc = cli.uid || cli.id;
         const idOf = cli.idOficina || "";
         const vencMs = dtVenc ? dtVenc.getTime() : 0;
         const infoVenc = classificarVencimento(dtVenc);
-
-        const vencBadge = (infoVenc.categoria === "vencidos" || infoVenc.categoria === "proximos")
-          ? `<span class="badge ${infoVenc.badgeClass}" style="margin-top:4px;">${escapeHtml(infoVenc.label)}</span>`
-          : "";
+        const pres = avaliarPresenca(cli);
 
         return `
           <tr>
             <td>
               <div style="font-weight: 700;">${escapeHtml(cli.nome || "-")}</div>
-              <div style="font-size: 0.8rem; color: rgba(236, 253, 245, 0.65);">${escapeHtml(cli.email || "-")}</div>
+              <div style="font-size: 0.78rem; color: var(--text-soft);">${escapeHtml(cli.email || "-")}</div>
+            </td>
+            <td>
+              <span class="badge ${pres.online ? "ok" : "offline"}">
+                <span class="${pres.online ? "dot-live" : "dot-offline"}"></span>
+                ${escapeHtml(pres.texto)}
+              </span>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">${escapeHtml(pres.detalhe)}</div>
             </td>
             <td>
               <div>${escapeHtml(cli.telefone || "-")}</div>
-              <div style="font-size: 0.8rem; color: rgba(236, 253, 245, 0.65);">${escapeHtml(cli.endereco || "-")}</div>
+              <div style="font-size: 0.78rem; color: var(--text-soft);">${escapeHtml(cli.endereco || "-")}</div>
             </td>
             <td>
-              <div style="font-weight: 600;">${escapeHtml(cli.nomeOficina || "-")} <span style="color:rgba(236, 253, 245, 0.62);font-weight:400;">(${escapeHtml(cli.plano || "mensal")})</span></div>
-              ${idOf ? `<span class="oficina-chip" title="Clique para copiar" onclick="copiarIdOficina('${escapeHtml(idOf)}')">${escapeHtml(idOf)}</span>` : `<span style="color:rgba(236, 253, 245, 0.45);font-size:0.78rem;">Sem idOficina</span>`}
-            </td>
-            <td>
-              <div>${formatDateBR(dtAtiv)}</div>
-              <div style="font-size: 0.78rem; color: rgba(236, 253, 245, 0.65);">Dia ${cli.diaAtivacao ?? "-"}</div>
+              <div style="font-weight: 600;">${escapeHtml(cli.nomeOficina || "-")} <span style="color:var(--text-soft);font-weight:400;">(${escapeHtml(cli.plano || "mensal")})</span></div>
+              ${idOf ? `<span class="mono-chip" onclick="copiarTexto('${escapeHtml(idOf)}')">${escapeHtml(idOf)}</span>` : `<span style="color:var(--text-muted);font-size:0.76rem;">Sem idOficina</span>`}
             </td>
             <td>
               <div style="font-weight: 700;">${formatDateBR(dtVenc)}</div>
-              <div style="font-size: 0.78rem; color: rgba(236, 253, 245, 0.65);">Dia ${cli.diaVencimento ?? "-"}</div>
-              ${vencBadge}
+              ${infoVenc.categoria !== "em_dia" ? `<span class="badge ${infoVenc.badgeClass}" style="margin-top:4px;">${escapeHtml(infoVenc.label)}</span>` : `<div style="font-size:0.75rem;color:var(--text-soft);">Dia ${cli.diaVencimento ?? "-"}</div>`}
             </td>
             <td>
-              <span class="badge ${isAtivo ? "ativo" : "inativo"}">
-                ${isAtivo ? "● Ativo" : "● Desativado"}
+              <span class="badge ${isAtivo ? "ok" : "err"}">
+                ${isAtivo ? "● Ativo" : "● Bloqueado"}
               </span>
             </td>
             <td>
-              <div class="actions-cell">
-                <button
-                  class="btn-mini btn-mini-renew"
-                  onclick="renovarMaisUmMes('${escapeHtml(uidDoc)}', ${vencMs})"
-                >
-                  +1 mês
-                </button>
-                <button
-                  class="btn-mini ${isAtivo ? "btn-mini-off" : "btn-mini-on"}"
-                  onclick="alternarStatusCliente('${escapeHtml(uidDoc)}', '${escapeHtml(idOf)}', ${!isAtivo})"
-                >
-                  ${isAtivo ? "Desativar" : "Ativar"}
+              <div class="actions-row">
+                <button class="btn-xs btn-xs-neutral" onclick="abrirModalEdicao('${escapeHtml(uidDoc)}')">Editar</button>
+                <button class="btn-xs btn-xs-green" onclick="renovarMaisUmMes('${escapeHtml(uidDoc)}', ${vencMs})">+1 mês</button>
+                <button class="btn-xs ${isAtivo ? "btn-xs-red" : "btn-xs-green"}" onclick="alternarStatusCliente('${escapeHtml(uidDoc)}', '${escapeHtml(idOf)}', ${!isAtivo})">
+                  ${isAtivo ? "Bloquear" : "Ativar"}
                 </button>
               </div>
             </td>
@@ -1208,9 +1810,9 @@
       }).join("");
     }
 
-    function renderTabelaVencimentos(lista) {
+    function renderVencimentos(lista) {
       if (!lista.length) {
-        vencimentosTbody.innerHTML = `<tr><td colspan="6" style="color: rgba(236, 253, 245, 0.65);">Nenhum cliente encontrado nesta visualização de vencimentos.</td></tr>`;
+        vencimentosTbody.innerHTML = `<tr><td colspan="6" style="color: var(--text-soft);">Nenhum vencimento nesta categoria.</td></tr>`;
         return;
       }
 
@@ -1222,6 +1824,7 @@
 
       vencimentosTbody.innerHTML = ordenada.map((cli) => {
         const dtVenc = cli.dataVencimento?.toDate ? cli.dataVencimento.toDate() : null;
+        const dtVencStr = formatDateBR(dtVenc);
         const isAtivo = Boolean(cli.ativo ?? cli.ativa);
         const uidDoc = cli.uid || cli.id;
         const idOf = cli.idOficina || "";
@@ -1232,38 +1835,23 @@
           <tr>
             <td>
               <div style="font-weight: 700;">${escapeHtml(cli.nome || "-")}</div>
-              <div style="font-size: 0.8rem; color: rgba(236, 253, 245, 0.65);">${escapeHtml(cli.email || "-")} • ${escapeHtml(cli.telefone || "-")}</div>
+              <div style="font-size: 0.78rem; color: var(--text-soft);">${escapeHtml(cli.telefone || "-")} • ${escapeHtml(cli.email || "-")}</div>
             </td>
             <td>
               <div style="font-weight: 600;">${escapeHtml(cli.nomeOficina || "-")}</div>
-              ${idOf ? `<span class="oficina-chip" title="Clique para copiar" onclick="copiarIdOficina('${escapeHtml(idOf)}')">${escapeHtml(idOf)}</span>` : `<span style="color:rgba(236, 253, 245, 0.45);font-size:0.78rem;">Sem idOficina</span>`}
+              ${idOf ? `<span class="mono-chip" onclick="copiarTexto('${escapeHtml(idOf)}')">${escapeHtml(idOf)}</span>` : ""}
             </td>
             <td>
-              <div style="font-weight: 700;">${formatDateBR(dtVenc)}</div>
-              <div style="font-size: 0.78rem; color: rgba(236, 253, 245, 0.65);">Plano: ${escapeHtml(cli.plano || "mensal")} • Dia ${cli.diaVencimento ?? "-"}</div>
+              <div style="font-weight: 700;">${dtVencStr}</div>
+              <div style="font-size: 0.75rem; color: var(--text-soft);">Plano ${escapeHtml(cli.plano || "mensal")}</div>
             </td>
+            <td><span class="badge ${infoVenc.badgeClass}">${escapeHtml(infoVenc.label)}</span></td>
+            <td><span class="badge ${isAtivo ? "ok" : "err"}">${isAtivo ? "● Ativo" : "● Bloqueado"}</span></td>
             <td>
-              <span class="badge ${infoVenc.badgeClass || "ativo"}">
-                ${escapeHtml(infoVenc.label)}
-              </span>
-            </td>
-            <td>
-              <span class="badge ${isAtivo ? "ativo" : "inativo"}">
-                ${isAtivo ? "● Ativo" : "● Desativado"}
-              </span>
-            </td>
-            <td>
-              <div class="actions-cell">
-                <button
-                  class="btn-mini btn-mini-renew"
-                  onclick="renovarMaisUmMes('${escapeHtml(uidDoc)}', ${vencMs})"
-                >
-                  Renovar +1 mês
-                </button>
-                <button
-                  class="btn-mini ${isAtivo ? "btn-mini-off" : "btn-mini-on"}"
-                  onclick="alternarStatusCliente('${escapeHtml(uidDoc)}', '${escapeHtml(idOf)}', ${!isAtivo})"
-                >
+              <div class="actions-row">
+                <button class="btn-xs btn-xs-neutral" onclick="cobrarWhatsApp('${escapeHtml(cli.nome || "")}', '${escapeHtml(cli.telefone || "")}', '${escapeHtml(cli.nomeOficina || "")}', '${escapeHtml(dtVencStr)}')">WhatsApp</button>
+                <button class="btn-xs btn-xs-green" onclick="renovarMaisUmMes('${escapeHtml(uidDoc)}', ${vencMs})">Renovar +1m</button>
+                <button class="btn-xs ${isAtivo ? "btn-xs-red" : "btn-xs-green"}" onclick="alternarStatusCliente('${escapeHtml(uidDoc)}', '${escapeHtml(idOf)}', ${!isAtivo})">
                   ${isAtivo ? "Bloquear" : "Liberar"}
                 </button>
               </div>
@@ -1273,30 +1861,83 @@
       }).join("");
     }
 
-    function escapeHtml(str) {
-      return String(str)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;");
+    function renderFinanceiro(lista) {
+      if (!lista.length) {
+        financeiroTbody.innerHTML = `<tr><td colspan="6" style="color: var(--text-soft);">Nenhum cliente para exibir no financeiro.</td></tr>`;
+        return;
+      }
+
+      financeiroTbody.innerHTML = lista.map((cli) => {
+        const dtVenc = cli.dataVencimento?.toDate ? cli.dataVencimento.toDate() : null;
+        const dtVencStr = formatDateBR(dtVenc);
+        const uidDoc = cli.uid || cli.id;
+        const valor = obterValorPlano(cli);
+        const infoVenc = classificarVencimento(dtVenc);
+
+        return `
+          <tr>
+            <td>
+              <div style="font-weight: 700;">${escapeHtml(cli.nome || "-")}</div>
+              <div style="font-size: 0.78rem; color: var(--text-soft);">${escapeHtml(cli.nomeOficina || "-")} ${cli.idOficina ? `• <code>${escapeHtml(cli.idOficina)}</code>` : ""}</div>
+            </td>
+            <td>${escapeHtml(cli.plano || "mensal")}</td>
+            <td style="font-weight: 700; color: var(--accent-bright);">${formatBRL(valor)}</td>
+            <td>${dtVencStr}</td>
+            <td><span class="badge ${infoVenc.badgeClass}">${escapeHtml(infoVenc.label)}</span></td>
+            <td>
+              <div class="actions-row">
+                <button class="btn-xs btn-xs-green" onclick="registrarPagamentoERenovar('${escapeHtml(uidDoc)}')">Registrar Pgto</button>
+                <button class="btn-xs btn-xs-neutral" onclick="cobrarWhatsApp('${escapeHtml(cli.nome || "")}', '${escapeHtml(cli.telefone || "")}', '${escapeHtml(cli.nomeOficina || "")}', '${escapeHtml(dtVencStr)}')">Cobrar</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
     }
 
-    function aplicarFiltrosClientes() {
-      const oficinaSelecionada = filtroOficinaSelect.value;
-      const statusSelecionado = filtroStatusSelect.value;
+    function renderPagamentos(lista) {
+      if (!lista.length) {
+        pagamentosTbody.innerHTML = `<tr><td colspan="6" style="color: var(--text-soft);">Nenhum pagamento registrado ainda.</td></tr>`;
+        return;
+      }
+
+      const ordenados = [...lista].sort((a, b) => {
+        const da = a.pagoEm?.toDate ? a.pagoEm.toDate().getTime() : 0;
+        const dbTime = b.pagoEm?.toDate ? b.pagoEm.toDate().getTime() : 0;
+        return dbTime - da;
+      });
+
+      pagamentosTbody.innerHTML = ordenados.map((p) => {
+        const dtPago = p.pagoEm?.toDate ? p.pagoEm.toDate().toLocaleString("pt-BR") : "-";
+        const dtNovoVenc = p.novoVencimento?.toDate ? formatDateBR(p.novoVencimento.toDate()) : "-";
+        return `
+          <tr>
+            <td>${escapeHtml(dtPago)}</td>
+            <td style="font-weight: 600;">${escapeHtml(p.nome || "-")}</td>
+            <td>${escapeHtml(p.nomeOficina || "-")} ${p.idOficina ? `<code>${escapeHtml(p.idOficina)}</code>` : ""}</td>
+            <td>${escapeHtml(p.plano || "mensal")}</td>
+            <td style="font-weight: 700; color: var(--accent-bright);">${formatBRL(p.valor)}</td>
+            <td>${dtNovoVenc}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function aplicarFiltros() {
+      const presSel = filtroPresencaSelect.value;
+      const ofSel = filtroOficinaSelect.value;
+      const stSel = filtroStatusSelect.value;
       const termo = buscaClienteInput.value.trim().toLowerCase();
 
-      const filtrados = cacheClientes.filter((c) => {
+      const filtradosClientes = cacheClientes.filter((c) => {
         const isAtivo = Boolean(c.ativo ?? c.ativa);
-        if (oficinaSelecionada && c.idOficina !== oficinaSelecionada) {
-          return false;
-        }
-        if (statusSelecionado === "ativo" && !isAtivo) {
-          return false;
-        }
-        if (statusSelecionado === "inativo" && isAtivo) {
-          return false;
-        }
+        const isOnline = avaliarPresenca(c).online;
+
+        if (presSel === "online" && !isOnline) return false;
+        if (presSel === "offline" && isOnline) return false;
+        if (ofSel && c.idOficina !== ofSel) return false;
+        if (stSel === "ativo" && !isAtivo) return false;
+        if (stSel === "inativo" && isAtivo) return false;
         if (!termo) return true;
         return (
           (c.nome || "").toLowerCase().includes(termo) ||
@@ -1305,58 +1946,96 @@
           (c.idOficina || "").toLowerCase().includes(termo)
         );
       });
+      renderClientes(filtradosClientes);
 
-      renderTabelaClientes(filtrados);
-    }
-
-    function aplicarFiltrosVencimentos() {
       const faixa = filtroVencimentoSelect.value;
-      const termo = buscaVencimentoInput.value.trim().toLowerCase();
-
-      const filtrados = cacheClientes.filter((c) => {
+      const termoVenc = buscaVencimentoInput.value.trim().toLowerCase();
+      const filtradosVenc = cacheClientes.filter((c) => {
         const dtVenc = c.dataVencimento?.toDate ? c.dataVencimento.toDate() : null;
         const info = classificarVencimento(dtVenc);
-
-        if (faixa !== "todos" && info.categoria !== faixa) {
-          return false;
-        }
-        if (!termo) return true;
+        if (faixa !== "todos" && info.categoria !== faixa) return false;
+        if (!termoVenc) return true;
         return (
-          (c.nome || "").toLowerCase().includes(termo) ||
-          (c.email || "").toLowerCase().includes(termo) ||
-          (c.nomeOficina || "").toLowerCase().includes(termo) ||
-          (c.idOficina || "").toLowerCase().includes(termo)
+          (c.nome || "").toLowerCase().includes(termoVenc) ||
+          (c.nomeOficina || "").toLowerCase().includes(termoVenc) ||
+          (c.idOficina || "").toLowerCase().includes(termoVenc)
         );
       });
-
-      renderTabelaVencimentos(filtrados);
+      renderVencimentos(filtradosVenc);
+      renderFinanceiro(cacheClientes);
     }
 
-    function escutarClientes() {
-      const colRef = collection(db, "usuarios");
-      onSnapshot(colRef, (snapshot) => {
-        cacheClientes = snapshot.docs
-          .map((d) => ({ id: d.id, ...d.data() }))
-          .filter((u) => u.role !== "admin");
-
-        atualizarKpisEAbas(cacheClientes);
-        atualizarFiltroOficinas(cacheClientes);
-        aplicarFiltrosClientes();
-        aplicarFiltrosVencimentos();
-      }, (err) => {
-        clientesTbody.innerHTML = `<tr><td colspan="7" style="color: #fca5a5;">Erro ao carregar: ${err.message}</td></tr>`;
-        vencimentosTbody.innerHTML = `<tr><td colspan="6" style="color: #fca5a5;">Erro ao carregar: ${err.message}</td></tr>`;
+    document.getElementById("btnExportarCsv").addEventListener("click", () => {
+      if (!cacheClientes.length) {
+        notificar("err", "Não há clientes para exportar.");
+        return;
+      }
+      const linhas = [
+        ["Nome", "Email", "Telefone", "Endereco", "Oficina", "idOficina", "Plano", "Valor", "Vencimento", "Status", "Presenca"].join(";")
+      ];
+      cacheClientes.forEach((c) => {
+        const dtV = c.dataVencimento?.toDate ? formatDateBR(c.dataVencimento.toDate()) : "";
+        const st = Boolean(c.ativo ?? c.ativa) ? "Ativo" : "Bloqueado";
+        const pres = avaliarPresenca(c).texto;
+        linhas.push([
+          c.nome || "",
+          c.email || "",
+          c.telefone || "",
+          c.endereco || "",
+          c.nomeOficina || "",
+          c.idOficina || "",
+          c.plano || "",
+          obterValorPlano(c).toFixed(2).replace(".", ","),
+          dtV,
+          st,
+          pres
+        ].map((v) => `"${String(v).replaceAll('"', '""')}"`).join(";"));
       });
-    }
+      const blob = new Blob(["\uFEFF" + linhas.join("\n")], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `clientes-nexus-oficina-${formatDateInput(new Date())}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      notificar("ok", "Arquivo CSV exportado.");
+    });
 
-    filtroOficinaSelect.addEventListener("change", aplicarFiltrosClientes);
-    filtroStatusSelect.addEventListener("change", aplicarFiltrosClientes);
-    buscaClienteInput.addEventListener("input", aplicarFiltrosClientes);
+    filtroPresencaSelect.addEventListener("change", aplicarFiltros);
+    filtroOficinaSelect.addEventListener("change", aplicarFiltros);
+    filtroStatusSelect.addEventListener("change", aplicarFiltros);
+    buscaClienteInput.addEventListener("input", aplicarFiltros);
+    filtroVencimentoSelect.addEventListener("change", aplicarFiltros);
+    buscaVencimentoInput.addEventListener("input", aplicarFiltros);
 
-    filtroVencimentoSelect.addEventListener("change", aplicarFiltrosVencimentos);
-    buscaVencimentoInput.addEventListener("input", aplicarFiltrosVencimentos);
+    [precoMensalPadrao, precoTrimestralPadrao, precoAnualPadrao].forEach((inp) => {
+      inp.addEventListener("input", () => {
+        atualizarResumo(cacheClientes);
+        aplicarFiltros();
+      });
+    });
 
-    escutarClientes();
+    // Reavalia presença online/offline a cada 20s mesmo sem eventos do Firestore
+    setInterval(() => {
+      atualizarResumo(cacheClientes);
+      aplicarFiltros();
+    }, 20000);
+
+    onSnapshot(collection(db, "usuarios"), (snapshot) => {
+      cacheClientes = snapshot.docs
+        .map((d) => ({ id: d.id, ...d.data() }))
+        .filter((u) => u.role !== "admin");
+
+      atualizarResumo(cacheClientes);
+      aplicarFiltros();
+    }, (err) => {
+      notificar("err", `Erro ao sincronizar Firestore: ${err.message}`);
+    });
+
+    onSnapshot(collection(db, "pagamentos_saas"), (snapshot) => {
+      cachePagamentos = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+      renderPagamentos(cachePagamentos);
+    }, () => {});
   </script>
 </body>
 </html>

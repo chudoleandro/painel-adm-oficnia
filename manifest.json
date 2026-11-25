@@ -1,0 +1,15 @@
+{
+  "name": "Nexus Oficina — Admin",
+  "short_name": "Nexus ADM",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#030604",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/1995/1995470.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

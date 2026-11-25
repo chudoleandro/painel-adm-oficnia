@@ -992,8 +992,8 @@
       <div class="card">
         <div class="card-header">
           <div>
-            <h3>Resumo Financeiro &amp; Receita Recorrente</h3>
-            <small>Ajuste os valores padrão por plano caso o cliente não tenha valor individual salvo</small>
+            <h3>Resumo Financeiro &amp; Valores dos Planos</h3>
+            <small>Os valores ficam salvos automaticamente no Firebase e no navegador</small>
           </div>
           <div class="toolbar">
             <label style="display:flex;align-items:center;gap:6px;">
@@ -1008,6 +1008,9 @@
               Anual R$
               <input type="number" id="precoAnualPadrao" step="0.01" min="0" value="999.00" style="width:110px;min-width:unset;" />
             </label>
+            <button type="button" class="btn btn-primary" id="btnSalvarValoresPlanos" style="padding:9px 14px;font-size:0.82rem;">
+              Salvar Valores
+            </button>
           </div>
         </div>
 
@@ -1233,6 +1236,8 @@
     const btnGerarIdOficina = document.getElementById("btnGerarIdOficina");
     const idOficinaInput = document.getElementById("idOficina");
     const nomeOficinaInput = document.getElementById("nomeOficina");
+    const planoCadastroSelect = document.getElementById("plano");
+    const valorMensalCadastroInput = document.getElementById("valorMensal");
     const dataAtivacaoInput = document.getElementById("dataAtivacao");
     const vencimentoPreview = document.getElementById("vencimentoPreview");
     const ativoCheckbox = document.getElementById("ativo");
@@ -1255,9 +1260,104 @@
     const precoMensalPadrao = document.getElementById("precoMensalPadrao");
     const precoTrimestralPadrao = document.getElementById("precoTrimestralPadrao");
     const precoAnualPadrao = document.getElementById("precoAnualPadrao");
+    const btnSalvarValoresPlanos = document.getElementById("btnSalvarValoresPlanos");
+
+    const STORAGE_PLANOS_KEY = "nexus_oficina_valores_planos_v1";
+    const configPlanosRef = doc(db, "configuracoes", "planos_saas");
 
     let cacheClientes = [];
     let cachePagamentos = [];
+    let savePlanosDebounce = null;
+
+    function carregarPlanosLocal() {
+      try {
+        const raw = localStorage.getItem(STORAGE_PLANOS_KEY);
+        if (!raw) return;
+        const dados = JSON.parse(raw);
+        if (dados.mensal != null) precoMensalPadrao.value = Number(dados.mensal).toFixed(2);
+        if (dados.trimestral != null) precoTrimestralPadrao.value = Number(dados.trimestral).toFixed(2);
+        if (dados.anual != null) precoAnualPadrao.value = Number(dados.anual).toFixed(2);
+        sincronizarValorNoCadastro();
+      } catch {}
+    }
+
+    function salvarPlanosLocal(valores) {
+      try {
+        localStorage.setItem(STORAGE_PLANOS_KEY, JSON.stringify(valores));
+      } catch {}
+    }
+
+    function sincronizarValorNoCadastro() {
+      const p = (planoCadastroSelect.value || "mensal").toLowerCase();
+      if (p === "trimestral") {
+        valorMensalCadastroInput.value = Number(precoTrimestralPadrao.value || 269.7).toFixed(2);
+      } else if (p === "anual") {
+        valorMensalCadastroInput.value = Number(precoAnualPadrao.value || 999).toFixed(2);
+      } else {
+        valorMensalCadastroInput.value = Number(precoMensalPadrao.value || 99.9).toFixed(2);
+      }
+    }
+
+    async function persistirValoresPlanos(mostrarToast = true) {
+      const valores = {
+        mensal: Number(precoMensalPadrao.value || 0),
+        trimestral: Number(precoTrimestralPadrao.value || 0),
+        anual: Number(precoAnualPadrao.value || 0)
+      };
+
+      salvarPlanosLocal(valores);
+      sincronizarValorNoCadastro();
+      atualizarResumo(cacheClientes);
+      aplicarFiltros();
+
+      try {
+        await setDoc(configPlanosRef, {
+          ...valores,
+          atualizadoEm: serverTimestamp()
+        }, { merge: true });
+        if (mostrarToast) {
+          notificar("ok", "Valores dos planos salvos na nuvem!");
+        }
+      } catch (err) {
+        if (mostrarToast) {
+          notificar("err", `Salvo localmente, mas erro na nuvem: ${err.message}`);
+        }
+      }
+    }
+
+    carregarPlanosLocal();
+
+    onSnapshot(configPlanosRef, (snap) => {
+      if (!snap.exists()) return;
+      const dados = snap.data();
+      if (typeof dados.mensal === "number") precoMensalPadrao.value = dados.mensal.toFixed(2);
+      if (typeof dados.trimestral === "number") precoTrimestralPadrao.value = dados.trimestral.toFixed(2);
+      if (typeof dados.anual === "number") precoAnualPadrao.value = dados.anual.toFixed(2);
+      salvarPlanosLocal({
+        mensal: Number(precoMensalPadrao.value),
+        trimestral: Number(precoTrimestralPadrao.value),
+        anual: Number(precoAnualPadrao.value)
+      });
+      sincronizarValorNoCadastro();
+      atualizarResumo(cacheClientes);
+      aplicarFiltros();
+    }, () => {});
+
+    btnSalvarValoresPlanos.addEventListener("click", () => persistirValoresPlanos(true));
+
+    [precoMensalPadrao, precoTrimestralPadrao, precoAnualPadrao].forEach((inp) => {
+      inp.addEventListener("input", () => {
+        clearTimeout(savePlanosDebounce);
+        savePlanosDebounce = setTimeout(() => {
+          persistirValoresPlanos(false);
+        }, 700);
+      });
+    });
+
+    planoCadastroSelect.addEventListener("change", () => {
+      sincronizarValorNoCadastro();
+      atualizarPreviewVencimento();
+    });
 
     function formatBRL(num) {
       return Number(num || 0).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
@@ -1384,7 +1484,7 @@
         return;
       }
       const ativacao = parseDateInput(dataAtivacaoInput.value);
-      const vencimento = adicionarMeses(ativacao, 1);
+      const vencimento = adicionarMeses(ativacao, mesesDoPlano(planoCadastroSelect.value));
       vencimentoPreview.value = `${formatDateBR(vencimento)} (Dia ${vencimento.getDate()})`;
     }
 
@@ -1417,8 +1517,8 @@
       const endereco = document.getElementById("endereco").value.trim();
       const idOficina = idOficinaInput.value.trim();
       const nomeOficina = nomeOficinaInput.value.trim();
-      const plano = document.getElementById("plano").value;
-      const valorMensal = Number(document.getElementById("valorMensal").value || 0);
+      const plano = planoCadastroSelect.value;
+      const valorMensal = Number(valorMensalCadastroInput.value || 0);
       const role = document.getElementById("role").value;
       const dataAtivacaoStr = dataAtivacaoInput.value;
       const ativo = ativoCheckbox.checked;
@@ -1461,8 +1561,8 @@
         });
 
         clientForm.reset();
-        document.getElementById("plano").value = "mensal";
-        document.getElementById("valorMensal").value = "99.90";
+        planoCadastroSelect.value = "mensal";
+        sincronizarValorNoCadastro();
         document.getElementById("role").value = "cliente";
         idOficinaInput.value = idOficina;
         nomeOficinaInput.value = nomeOficina;
@@ -2009,13 +2109,6 @@
     buscaClienteInput.addEventListener("input", aplicarFiltros);
     filtroVencimentoSelect.addEventListener("change", aplicarFiltros);
     buscaVencimentoInput.addEventListener("input", aplicarFiltros);
-
-    [precoMensalPadrao, precoTrimestralPadrao, precoAnualPadrao].forEach((inp) => {
-      inp.addEventListener("input", () => {
-        atualizarResumo(cacheClientes);
-        aplicarFiltros();
-      });
-    });
 
     // Reavalia presença online/offline a cada 20s mesmo sem eventos do Firestore
     setInterval(() => {

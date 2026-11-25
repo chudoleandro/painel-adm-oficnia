@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Oficina — Painel ADM Preto &amp; Verde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-0: #040705;
+      --bg-1: #070e0a;
+      --surface: rgba(10, 22, 16, 0.86);
+      --surface-2: rgba(7, 15, 11, 0.95);
+      --surface-hover: rgba(16, 185, 129, 0.12);
+      --border: rgba(52, 211, 153, 0.16);
+      --border-strong: rgba(16, 185, 129, 0.44);
+      --text: #ecfdf5;
+      --text-soft: #86efac;
+      --text-dim: #5eead4;
+      --text-muted: #6ee7b7;
+      --accent: #10b981;
+      --accent-2: #059669;
+      --accent-bright: #34d399;
+      --accent-glow: rgba(16, 185, 129, 0.28);
+      --ok: #10b981;
+      --ok-bg: rgba(16, 185, 129, 0.16);
+      --warn: #eab308;
+      --warn-bg: rgba(234, 179, 8, 0.16);
+      --err: #ef4444;
+      --err-bg: rgba(239, 68, 68, 0.16);
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 10% -10%, rgba(16, 185, 129, 0.16), transparent 60%),
+        radial-gradient(800px 480px at 90% 0%, rgba(5, 150, 105, 0.14), transparent 60%),
+        linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+      padding: 28px 20px 56px;
+      line-height: 1.45;
+    }
+
+    .app {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* Topbar */
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-badge {
+      width: 46px;
+      height: 46px;
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--accent-bright), var(--accent-2));
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: #03120b;
+      box-shadow: 0 10px 24px var(--accent-glow);
+    }
+
+    .brand h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand p {
+      font-size: 0.84rem;
+      color: rgba(236, 253, 245, 0.72);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.14);
+      border: 1px solid rgba(52, 211, 153, 0.34);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--accent-bright);
+    }
+
+    .dot-live {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-bright);
+      box-shadow: 0 0 10px var(--accent-bright);
+    }
+
+    /* KPI Grid */
+    .kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 18px 20px;
+      transition: transform 0.16s ease, border-color 0.16s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-strong);
+    }
+
+    .kpi-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: rgba(167, 243, 208, 0.75);
+      font-weight: 600;
+    }
+
+    .kpi-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin-top: 6px;
+      letter-spacing: -0.03em;
+    }
+
+    .kpi-sub {
+      font-size: 0.8rem;
+      color: rgba(236, 253, 245, 0.56);
+      margin-top: 4px;
+    }
+
+    /* Navegação por Abas */
+    .tabs-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 10px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .tab-btn {
+      flex: 1 1 180px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+      background: transparent;
+      color: rgba(236, 253, 245, 0.7);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+    }
+
+    .tab-btn:hover {
+      background: var(--surface-hover);
+      color: var(--text);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(5, 150, 105, 0.22));
+      border-color: var(--border-strong);
+      color: var(--accent-bright);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+    }
+
+    .tab-count {
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      background: rgba(16, 185, 129, 0.18);
+      color: var(--text);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+    }
+
+    .card-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-head h2 {
+      font-size: 1.08rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .card-head span {
+      font-size: 0.82rem;
+      color: rgba(236, 253, 245, 0.7);
+    }
+
+    code {
+      color: var(--accent-bright);
+      background: rgba(16, 185, 129, 0.12);
+      padding: 2px 6px;
+      border-radius: 5px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field.span-2 {
+      grid-column: span 2;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    @media (max-width: 720px) {
+      .field.span-2 {
+        grid-column: 1 / -1;
+      }
+    }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(167, 243, 208, 0.82);
+    }
+
+    input, select {
+      width: 100%;
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 11px 13px;
+      font-size: 0.92rem;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--accent-bright);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+    }
+
+    input[readonly] {
+      color: var(--accent-bright);
+      background: rgba(6, 16, 11, 0.85);
+      font-weight: 600;
+    }
+
+    .inline-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .inline-row input {
+      flex: 1;
+    }
+
+    .toggle-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 13px;
+      min-height: 43px;
+    }
+
+    .toggle-box input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-bright);
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-bright), var(--accent-2));
+      color: #03120b;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 12px 20px;
+      font-size: 0.94rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 24px var(--accent-glow);
+      transition: transform 0.14s ease, filter 0.14s ease;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      transform: translateY(-1px);
+      filter: brightness(1.06);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-ghost {
+      background: var(--surface-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 13px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--border-strong);
+      background: var(--surface-hover);
+    }
+
+    .actions-cell {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn-mini {
+      padding: 6px 10px;
+      border-radius: 7px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: filter 0.15s ease;
+    }
+
+    .btn-mini:hover {
+      filter: brightness(1.12);
+    }
+
+    .btn-mini-renew {
+      background: rgba(16, 185, 129, 0.18);
+      color: var(--accent-bright);
+      border-color: rgba(52, 211, 153, 0.38);
+    }
+
+    .btn-mini-off {
+      background: var(--err-bg);
+      color: #fca5a5;
+      border-color: rgba(239, 68, 68, 0.35);
+    }
+
+    .btn-mini-on {
+      background: var(--ok-bg);
+      color: #6ee7b7;
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    .alert {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 500;
+      display: none;
+    }
+
+    .alert.ok {
+      display: block;
+      background: var(--ok-bg);
+      border: 1px solid rgba(52, 211, 153, 0.42);
+      color: #a7f3d0;
+    }
+
+    .alert.err {
+      display: block;
+      background: var(--err-bg);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fecaca;
+    }
+
+    .filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .filters select,
+    .filters input {
+      width: auto;
+      min-width: 200px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border);
+      background: rgba(4, 9, 7, 0.65);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    th {
+      text-align: left;
+      padding: 12px 14px;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--accent-bright);
+      background: rgba(9, 20, 15, 0.92);
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 13px 14px;
+      border-bottom: 1px solid rgba(52, 211, 153, 0.09);
+      vertical-align: middle;
+    }
+
+    tbody tr:hover {
+      background: rgba(16, 185, 129, 0.07);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .oficina-chip {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: rgba(16, 185, 129, 0.14);
+      color: #a7f3d0;
+      border: 1px solid rgba(52, 211, 153, 0.32);
+      cursor: pointer;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .badge.ativo {
+      background: var(--ok-bg);
+      color: #6ee7b7;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
+
+    .badge.inativo {
+      background: var(--err-bg);
+      color: #fca5a5;
+      border: 1px solid rgba(239, 68, 68, 0.35);
+    }
+
+    .badge.vencendo {
+      background: var(--warn-bg);
+      color: #fde047;
+      border: 1px solid rgba(234, 179, 8, 0.35);
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-badge">NO</div>
+        <div>
+          <h1>Nexus Oficina — Painel Administrativo</h1>
+          <p>Gestão de contas, vencimentos e isolamento multi-oficina • Projeto <strong>oficina-sistema-18376</strong></p>
+        </div>
+      </div>
+      <div class="status-pill">
+        <span class="dot-live"></span>
+        <span>Firestore em tempo real</span>
+      </div>
+    </header>
+
+    <section class="kpis">
+      <div class="kpi-card">
+        <div class="kpi-label">Clientes Cadastrados</div>
+        <div class="kpi-value" id="kpiTotal">0</div>
+        <div class="kpi-sub">Total na coleção usuarios</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Contas Ativas</div>
+        <div class="kpi-value" id="kpiAtivos" style="color: #34d399;">0</div>
+        <div class="kpi-sub">Com acesso liberado</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Oficinas Isoladas</div>
+        <div class="kpi-value" id="kpiOficinas" style="color: #6ee7b7;">0</div>
+        <div class="kpi-sub">Identificadores idOficina</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Vencendo / Vencidos</div>
+        <div class="kpi-value" id="kpiVencimento" style="color: #fde047;">0</div>
+        <div class="kpi-sub">Até 5 dias ou expirados</div>
+      </div>
+    </section>
+
+    <nav class="tabs-bar" aria-label="Seções do painel">
+      <button type="button" class="tab-btn active" data-tab="clientes">
+        <span>Clientes</span>
+        <span class="tab-count" id="tabCountClientes">0</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="cadastro">
+        <span>Cadastro</span>
+        <span class="tab-count">+ Novo</span>
+      </button>
+      <button type="button" class="tab-btn" data-tab="vencimentos">
+        <span>Vencimentos</span>
+        <span class="tab-count" id="tabCountVencimentos">0</span>
+      </button>
+    </nav>
+
+    <div id="globalAlert" class="alert" style="margin-top: 0; margin-bottom: 20px;"></div>
+
+    <!-- ABA 1: CLIENTES -->
+    <section id="panel-clientes" class="tab-panel active">
+      <div class="card">
+        <div class="card-head">
+          <h2>Carteira de Clientes por Oficina</h2>
+          <div class="filters">
+            <select id="filtroOficina">
+              <option value="">Todas as oficinas</option>
+            </select>
+            <select id="filtroStatus">
+              <option value="">Todos os status</option>
+              <option value="ativo">Apenas ativos</option>
+              <option value="inativo">Apenas desativados</option>
+            </select>
+            <input type="text" id="buscaCliente" placeholder="Buscar nome, e-mail ou idOficina..." />
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Contato &amp; Endereço</th>
+                <th>Oficina (Isolamento)</th>
+                <th>Ativação</th>
+                <th>Vencimento</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="clientesTbody">
+              <tr>
+                <td colspan="7" style="color: rgba(236, 253, 245, 0.65);">Carregando clientes...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABA 2: CADASTRO -->
+    <section id="panel-cadastro" class="tab-panel">
+      <div class="card">
+        <div class="card-head">
+          <h2>Novo Cliente &amp; Vinculação de Oficina</h2>
+          <span>Cria o usuário no Firebase Auth, registra em <code>oficinas/{idOficina}</code> e salva em <code>usuarios/{uid}</code></span>
+        </div>
+
+        <form id="clientForm" class="form-grid">
+          <div class="field">
+            <label for="nome">Nome Completo</label>
+            <input type="text" id="nome" required placeholder="Ex.: Tais Silva" />
+          </div>
+
+          <div class="field">
+            <label for="telefone">Telefone / WhatsApp</label>
+            <input type="tel" id="telefone" required placeholder="Ex.: 19999999999" />
+          </div>
+
+          <div class="field">
+            <label for="email">E-mail de Acesso</label>
+            <input type="email" id="email" required placeholder="cliente@oficina.com" />
+          </div>
+
+          <div class="field">
+            <label for="senha">Senha Inicial (mín. 6 caracteres)</label>
+            <input type="password" id="senha" minlength="6" required placeholder="••••••••" />
+          </div>
+
+          <div class="field span-2">
+            <label for="endereco">Endereço Completo</label>
+            <input type="text" id="endereco" required placeholder="Rua, número, bairro, cidade - UF" />
+          </div>
+
+          <div class="field">
+            <label for="idOficina">ID Único da Oficina (idOficina)</label>
+            <div class="inline-row">
+              <input type="text" id="idOficina" required placeholder="Ex.: oficina_001" />
+              <button type="button" class="btn-ghost" id="btnGerarIdOficina">Gerar ID</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="nomeOficina">Nome da Oficina (nomeOficina)</label>
+            <input type="text" id="nomeOficina" required placeholder="Ex.: Oficina Central" />
+          </div>
+
+          <div class="field">
+            <label for="plano">Plano</label>
+            <select id="plano">
+              <option value="mensal" selected>mensal</option>
+              <option value="trimestral">trimestral</option>
+              <option value="anual">anual</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="role">Perfil (role)</label>
+            <select id="role">
+              <option value="cliente" selected>cliente</option>
+              <option value="gerente">gerente</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="dataAtivacao">Data de Ativação</label>
+            <input type="date" id="dataAtivacao" required />
+          </div>
+
+          <div class="field">
+            <label for="vencimentoPreview">Próximo Vencimento (+1 mês)</label>
+            <input type="text" id="vencimentoPreview" readonly />
+          </div>
+
+          <div class="field">
+            <label>Status Inicial do Acesso</label>
+            <div class="toggle-box">
+              <input type="checkbox" id="ativo" checked />
+              <label for="ativo" id="ativoLabel" style="color: #34d399; font-weight: 700; cursor: pointer;">
+                Ativo (ativo / ativa: true)
+              </label>
+            </div>
+          </div>
+
+          <div class="field full" style="margin-top: 4px;">
+            <button type="submit" class="btn-primary" id="btnCadastrar">
+              Cadastrar Cliente e Ativar Oficina
+            </button>
+          </div>
+        </form>
+
+        <div id="formFeedback" class="alert"></div>
+      </div>
+    </section>
+
+    <!-- ABA 3: VENCIMENTOS -->
+    <section id="panel-vencimentos" class="tab-panel">
+      <div class="card">
+        <div class="card-head">
+          <h2>Controle de Vencimentos e Renovações</h2>
+          <div class="filters">
+            <select id="filtroVencimento">
+              <option value="todos">Todos com vencimento</option>
+              <option value="vencidos">Vencidos</option>
+              <option value="proximos">Vencendo em até 5 dias</option>
+              <option value="em_dia">Em dia (mais de 5 dias)</option>
+            </select>
+            <input type="text" id="buscaVencimento" placeholder="Buscar cliente ou oficina..." />
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Oficina (idOficina)</th>
+                <th>Data de Vencimento</th>
+                <th>Situação do Prazo</th>
+                <th>Status da Conta</th>
+                <th>Renovação &amp; Acesso</th>
+              </tr>
+            </thead>
+            <tbody id="vencimentosTbody">
+              <tr>
+                <td colspan="6" style="color: rgba(236, 253, 245, 0.65);">Carregando vencimentos...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script type="module">
+    import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import {
+      getAuth,
+      createUserWithEmailAndPassword,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import {
+      getFirestore,
+      collection,
+      doc,
+      setDoc,
+      updateDoc,
+      onSnapshot,
+      serverTimestamp,
+      Timestamp
+    } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDD1_6L0rhJstGZtH6urRLtFnkfJaAV3NY",
+      authDomain: "oficina-sistema-18376.firebaseapp.com",
+      projectId: "oficina-sistema-18376",
+      storageBucket: "oficina-sistema-18376.firebasestorage.app",
+      messagingSenderId: "278020430040",
+      appId: "1:278020430040:web:d519a009dc55168fcfdfad"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const secondaryApp = getApps().some(a => a.name === "SecondaryAuth")
+      ? getApp("SecondaryAuth")
+      : initializeApp(firebaseConfig, "SecondaryAuth");
+    const secondaryAuth = getAuth(secondaryApp);
+
+    // Abas
+    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabPanels = document.querySelectorAll(".tab-panel");
+    const tabCountClientes = document.getElementById("tabCountClientes");
+    const tabCountVencimentos = document.getElementById("tabCountVencimentos");
+
+    function ativarAba(nomeAba) {
+      tabButtons.forEach((btn) => {
+        btn.classList.toggle("active", btn.dataset.tab === nomeAba);
+      });
+      tabPanels.forEach((panel) => {
+        panel.classList.toggle("active", panel.id === `panel-${nomeAba}`);
+      });
+    }
+
+    tabButtons.forEach((btn) => {
+      btn.addEventListener("click", () => ativarAba(btn.dataset.tab));
+    });
+
+    const globalAlert = document.getElementById("globalAlert");
+    const clientForm = document.getElementById("clientForm");
+    const formFeedback = document.getElementById("formFeedback");
+    const btnCadastrar = document.getElementById("btnCadastrar");
+    const btnGerarIdOficina = document.getElementById("btnGerarIdOficina");
+    const idOficinaInput = document.getElementById("idOficina");
+    const nomeOficinaInput = document.getElementById("nomeOficina");
+    const dataAtivacaoInput = document.getElementById("dataAtivacao");
+    const vencimentoPreview = document.getElementById("vencimentoPreview");
+    const ativoCheckbox = document.getElementById("ativo");
+    const ativoLabel = document.getElementById("ativoLabel");
+
+    const clientesTbody = document.getElementById("clientesTbody");
+    const buscaClienteInput = document.getElementById("buscaCliente");
+    const filtroOficinaSelect = document.getElementById("filtroOficina");
+    const filtroStatusSelect = document.getElementById("filtroStatus");
+
+    const vencimentosTbody = document.getElementById("vencimentosTbody");
+    const filtroVencimentoSelect = document.getElementById("filtroVencimento");
+    const buscaVencimentoInput = document.getElementById("buscaVencimento");
+
+    const kpiTotal = document.getElementById("kpiTotal");
+    const kpiAtivos = document.getElementById("kpiAtivos");
+    const kpiOficinas = document.getElementById("kpiOficinas");
+    const kpiVencimento = document.getElementById("kpiVencimento");
+
+    let cacheClientes = [];
+
+    function gerarIdOficinaUnico() {
+      const baseNome = (nomeOficinaInput.value || "oficina")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "")
+        .slice(0, 16) || "oficina";
+      const sufixo = Math.random().toString(36).slice(2, 7);
+      return `${baseNome}_${sufixo}`;
+    }
+
+    btnGerarIdOficina.addEventListener("click", () => {
+      idOficinaInput.value = gerarIdOficinaUnico();
+    });
+
+    function showAlert(el, type, message) {
+      el.className = `alert ${type}`;
+      el.textContent = message;
+    }
+
+    function clearAlert(el) {
+      el.className = "alert";
+      el.textContent = "";
+    }
+
+    function parseDateInput(yyyyMmDd) {
+      const [y, m, d] = yyyyMmDd.split("-").map(Number);
+      return new Date(y, m - 1, d, 12, 0, 0);
+    }
+
+    function formatDateInput(dateObj) {
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, "0");
+      const d = String(dateObj.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function formatDateBR(dateObj) {
+      if (!(dateObj instanceof Date) || Number.isNaN(dateObj.getTime())) return "-";
+      return dateObj.toLocaleDateString("pt-BR");
+    }
+
+    function calcularProximoVencimento(dataAtivacaoDate) {
+      const ano = dataAtivacaoDate.getFullYear();
+      const mesAlvo = dataAtivacaoDate.getMonth() + 1;
+      const diaOriginal = dataAtivacaoDate.getDate();
+
+      const ultimoDiaMesAlvo = new Date(ano, mesAlvo + 1, 0).getDate();
+      const diaFinal = Math.min(diaOriginal, ultimoDiaMesAlvo);
+
+      return new Date(ano, mesAlvo, diaFinal, 23, 59, 59);
+    }
+
+    function classificarVencimento(dtVenc) {
+      if (!(dtVenc instanceof Date) || Number.isNaN(dtVenc.getTime())) {
+        return { categoria: "sem_data", label: "Sem data", badgeClass: "", diasDiff: null };
+      }
+      const agora = new Date();
+      const diffMs = dtVenc.getTime() - agora.getTime();
+      const diasDiff = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+      if (dtVenc < agora) {
+        return {
+          categoria: "vencidos",
+          label: `Vencido há ${Math.max(1, Math.abs(diasDiff))} dia(s)`,
+          badgeClass: "inativo",
+          diasDiff
+        };
+      }
+      if (diasDiff <= 5) {
+        return {
+          categoria: "proximos",
+          label: diasDiff === 0 ? "Vence hoje" : `Vence em ${diasDiff} dia(s)`,
+          badgeClass: "vencendo",
+          diasDiff
+        };
+      }
+      return {
+        categoria: "em_dia",
+        label: `Em dia (${diasDiff} dias)`,
+        badgeClass: "ativo",
+        diasDiff
+      };
+    }
+
+    function atualizarPreviewVencimento() {
+      if (!dataAtivacaoInput.value) {
+        vencimentoPreview.value = "";
+        return;
+      }
+      const ativacao = parseDateInput(dataAtivacaoInput.value);
+      const vencimento = calcularProximoVencimento(ativacao);
+      vencimentoPreview.value = `${formatDateBR(vencimento)} (Dia ${vencimento.getDate()})`;
+    }
+
+    function atualizarVisualStatusCheckbox() {
+      if (ativoCheckbox.checked) {
+        ativoLabel.textContent = "Ativo (ativo / ativa: true)";
+        ativoLabel.style.color = "#34d399";
+      } else {
+        ativoLabel.textContent = "Desativado (ativo / ativa: false)";
+        ativoLabel.style.color = "#fca5a5";
+      }
+    }
+
+    const hoje = new Date();
+    dataAtivacaoInput.value = formatDateInput(hoje);
+    atualizarPreviewVencimento();
+    atualizarVisualStatusCheckbox();
+
+    dataAtivacaoInput.addEventListener("change", atualizarPreviewVencimento);
+    ativoCheckbox.addEventListener("change", atualizarVisualStatusCheckbox);
+
+    clientForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      clearAlert(formFeedback);
+      clearAlert(globalAlert);
+      btnCadastrar.disabled = true;
+      btnCadastrar.textContent = "Cadastrando...";
+
+      const nome = document.getElementById("nome").value.trim();
+      const telefone = document.getElementById("telefone").value.trim();
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const senha = document.getElementById("senha").value;
+      const endereco = document.getElementById("endereco").value.trim();
+      const idOficina = idOficinaInput.value.trim();
+      const nomeOficina = nomeOficinaInput.value.trim();
+      const plano = document.getElementById("plano").value;
+      const role = document.getElementById("role").value;
+      const dataAtivacaoStr = dataAtivacaoInput.value;
+      const ativo = ativoCheckbox.checked;
+
+      try {
+        const cred = await createUserWithEmailAndPassword(secondaryAuth, email, senha);
+        const uid = cred.user.uid;
+        await signOut(secondaryAuth);
+
+        const dataAtivacaoDate = parseDateInput(dataAtivacaoStr);
+        const dataVencimentoDate = calcularProximoVencimento(dataAtivacaoDate);
+
+        await setDoc(doc(db, "oficinas", idOficina), {
+          idOficina,
+          nomeOficina,
+          ativa: ativo,
+          atualizadoEm: serverTimestamp()
+        }, { merge: true });
+
+        await setDoc(doc(db, "usuarios", uid), {
+          uid,
+          nome,
+          telefone,
+          endereco,
+          email,
+          role,
+          plano,
+          idOficina,
+          nomeOficina,
+          ativo,
+          ativa: ativo,
+          diaAtivacao: dataAtivacaoDate.getDate(),
+          diaVencimento: dataVencimentoDate.getDate(),
+          dataAtivacao: Timestamp.fromDate(dataAtivacaoDate),
+          dataVencimento: Timestamp.fromDate(dataVencimentoDate),
+          criadoEm: serverTimestamp(),
+          atualizadoEm: serverTimestamp()
+        });
+
+        clientForm.reset();
+        document.getElementById("plano").value = "mensal";
+        document.getElementById("role").value = "cliente";
+        idOficinaInput.value = idOficina;
+        nomeOficinaInput.value = nomeOficina;
+        dataAtivacaoInput.value = formatDateInput(new Date());
+        ativoCheckbox.checked = true;
+        atualizarVisualStatusCheckbox();
+        atualizarPreviewVencimento();
+
+        showAlert(
+          formFeedback,
+          "ok",
+          `Cliente "${nome}" criado e vinculado ao idOficina "${idOficina}" (${nomeOficina}). Próximo vencimento: ${formatDateBR(dataVencimentoDate)}.`
+        );
+      } catch (err) {
+        showAlert(formFeedback, "err", `Erro ao cadastrar cliente: ${err.message}`);
+      } finally {
+        btnCadastrar.disabled = false;
+        btnCadastrar.textContent = "Cadastrar Cliente e Ativar Oficina";
+      }
+    });
+
+    window.alternarStatusCliente = async (uid, idOficina, novoStatus) => {
+      try {
+        await updateDoc(doc(db, "usuarios", uid), {
+          ativo: novoStatus,
+          ativa: novoStatus,
+          atualizadoEm: serverTimestamp()
+        });
+        if (idOficina) {
+          await setDoc(doc(db, "oficinas", idOficina), {
+            ativa: novoStatus,
+            atualizadoEm: serverTimestamp()
+          }, { merge: true });
+        }
+        showAlert(globalAlert, "ok", `Status do cliente atualizado para ${novoStatus ? "Ativo" : "Desativado"}.`);
+      } catch (err) {
+        showAlert(globalAlert, "err", `Erro ao atualizar status: ${err.message}`);
+      }
+    };
+
+    window.renovarMaisUmMes = async (uid, vencAtualMs) => {
+      try {
+        const baseDate = vencAtualMs ? new Date(vencAtualMs) : new Date();
+        if (baseDate < new Date()) {
+          baseDate.setTime(new Date().getTime());
+        }
+        const novoVenc = calcularProximoVencimento(baseDate);
+        await updateDoc(doc(db, "usuarios", uid), {
+          ativo: true,
+          ativa: true,
+          diaVencimento: novoVenc.getDate(),
+          dataVencimento: Timestamp.fromDate(novoVenc),
+          atualizadoEm: serverTimestamp()
+        });
+        showAlert(globalAlert, "ok", `Vencimento renovado para ${formatDateBR(novoVenc)} e acesso ativado.`);
+      } catch (err) {
+        showAlert(globalAlert, "err", `Erro ao renovar vencimento: ${err.message}`);
+      }
+    };
+
+    window.copiarIdOficina = async (idOficina) => {
+      if (!idOficina) return;
+      try {
+        await navigator.clipboard.writeText(idOficina);
+        showAlert(globalAlert, "ok", `idOficina "${idOficina}" copiado para a área de transferência.`);
+      } catch {
+        showAlert(globalAlert, "ok", `idOficina: ${idOficina}`);
+      }
+    };
+
+    function atualizarKpisEAbas(lista) {
+      const total = lista.length;
+      const ativos = lista.filter((c) => Boolean(c.ativo ?? c.ativa)).length;
+      const oficinasSet = new Set(lista.map((c) => c.idOficina).filter(Boolean));
+
+      let alertaVenc = 0;
+      lista.forEach((c) => {
+        const dtVenc = c.dataVencimento?.toDate ? c.dataVencimento.toDate() : null;
+        const info = classificarVencimento(dtVenc);
+        if (info.categoria === "vencidos" || info.categoria === "proximos") {
+          alertaVenc += 1;
+        }
+      });
+
+      kpiTotal.textContent = String(total);
+      kpiAtivos.textContent = String(ativos);
+      kpiOficinas.textContent = String(oficinasSet.size);
+      kpiVencimento.textContent = String(alertaVenc);
+
+      tabCountClientes.textContent = String(total);
+      tabCountVencimentos.textContent = String(alertaVenc);
+    }
+
+    function atualizarFiltroOficinas(lista) {
+      const atual = filtroOficinaSelect.value;
+      const oficinasMap = new Map();
+      lista.forEach((c) => {
+        if (c.idOficina) {
+          oficinasMap.set(c.idOficina, c.nomeOficina || c.idOficina);
+        }
+      });
+
+      const opcoes = [`<option value="">Todas as oficinas (${oficinasMap.size})</option>`];
+      for (const [idOf, nomeOf] of oficinasMap.entries()) {
+        opcoes.push(`<option value="${escapeHtml(idOf)}">${escapeHtml(nomeOf)} (${escapeHtml(idOf)})</option>`);
+      }
+      filtroOficinaSelect.innerHTML = opcoes.join("");
+      if (atual && oficinasMap.has(atual)) {
+        filtroOficinaSelect.value = atual;
+      }
+    }
+
+    function renderTabelaClientes(lista) {
+      if (!lista.length) {
+        clientesTbody.innerHTML = `<tr><td colspan="7" style="color: rgba(236, 253, 245, 0.65);">Nenhum cliente encontrado para o filtro atual.</td></tr>`;
+        return;
+      }
+
+      clientesTbody.innerHTML = lista.map((cli) => {
+        const dtAtiv = cli.dataAtivacao?.toDate ? cli.dataAtivacao.toDate() : null;
+        const dtVenc = cli.dataVencimento?.toDate ? cli.dataVencimento.toDate() : null;
+        const isAtivo = Boolean(cli.ativo ?? cli.ativa);
+        const uidDoc = cli.uid || cli.id;
+        const idOf = cli.idOficina || "";
+        const vencMs = dtVenc ? dtVenc.getTime() : 0;
+        const infoVenc = classificarVencimento(dtVenc);
+
+        const vencBadge = (infoVenc.categoria === "vencidos" || infoVenc.categoria === "proximos")
+          ? `<span class="badge ${infoVenc.badgeClass}" style="margin-top:4px;">${escapeHtml(infoVenc.label)}</span>`
+          : "";
+
+        return `
+          <tr>
+            <td>
+              <div style="font-weight: 700;">${escapeHtml(cli.nome || "-")}</div>
+              <div style="font-size: 0.8rem; color: rgba(236, 253, 245, 0.65);">${escapeHtml(cli.email || "-")}</div>
+            </td>
+            <td>
+              <div>${escapeHtml(cli.telefone || "-")}</div>
+              <div style="font-size: 0.8rem; color: rgba(236, 253, 245, 0.65);">${escapeHtml(cli.endereco || "-")}</div>
+            </td>
+            <td>
+              <div style="font-weight: 600;">${escapeHtml(cli.nomeOficina || "-")} <span style="color:rgba(236, 253, 245, 0.62);font-weight:400;">(${escapeHtml(cli.plano || "mensal")})</span></div>
+              ${idOf ? `<span class="oficina-chip" title="Clique para copiar" onclick="copiarIdOficina('${escapeHtml(idOf)}')">${escapeHtml(idOf)}</span>` : `<span style="color:rgba(236, 253, 245, 0.45);font-size:0.78rem;">Sem idOficina</span>`}
+            </td>
+            <td>
+              <div>${formatDateBR(dtAtiv)}</div>
+              <div style="font-size: 0.78rem; color: rgba(236, 253, 245, 0.65);">Dia ${cli.diaAtivacao ?? "-"}</div>
+            </td>
+            <td>
+              <div style="font-weight: 700;">${formatDateBR(dtVenc)}</div>
+              <div style="font-size: 0.78rem; color: rgba(236, 253, 245, 0.65);">Dia ${cli.diaVencimento ?? "-"}</div>
+              ${vencBadge}
+            </td>
+            <td>
+              <span class="badge ${isAtivo ? "ativo" : "inativo"}">
+                ${isAtivo ? "● Ativo" : "● Desativado"}
+              </span>
+            </td>
+            <td>
+              <div class="actions-cell">
+                <button
+                  class="btn-mini btn-mini-renew"
+                  onclick="renovarMaisUmMes('${escapeHtml(uidDoc)}', ${vencMs})"
+                >
+                  +1 mês
+                </button>
+                <button
+                  class="btn-mini ${isAtivo ? "btn-mini-off" : "btn-mini-on"}"
+                  onclick="alternarStatusCliente('${escapeHtml(uidDoc)}', '${escapeHtml(idOf)}', ${!isAtivo})"
+                >
+                  ${isAtivo ? "Desativar" : "Ativar"}
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderTabelaVencimentos(lista) {
+      if (!lista.length) {
+        vencimentosTbody.innerHTML = `<tr><td colspan="6" style="color: rgba(236, 253, 245, 0.65);">Nenhum cliente encontrado nesta visualização de vencimentos.</td></tr>`;
+        return;
+      }
+
+      const ordenada = [...lista].sort((a, b) => {
+        const da = a.dataVencimento?.toDate ? a.dataVencimento.toDate().getTime() : Number.MAX_SAFE_INTEGER;
+        const dbTime = b.dataVencimento?.toDate ? b.dataVencimento.toDate().getTime() : Number.MAX_SAFE_INTEGER;
+        return da - dbTime;
+      });
+
+      vencimentosTbody.innerHTML = ordenada.map((cli) => {
+        const dtVenc = cli.dataVencimento?.toDate ? cli.dataVencimento.toDate() : null;
+        const isAtivo = Boolean(cli.ativo ?? cli.ativa);
+        const uidDoc = cli.uid || cli.id;
+        const idOf = cli.idOficina || "";
+        const vencMs = dtVenc ? dtVenc.getTime() : 0;
+        const infoVenc = classificarVencimento(dtVenc);
+
+        return `
+          <tr>
+            <td>
+              <div style="font-weight: 700;">${escapeHtml(cli.nome || "-")}</div>
+              <div style="font-size: 0.8rem; color: rgba(236, 253, 245, 0.65);">${escapeHtml(cli.email || "-")} • ${escapeHtml(cli.telefone || "-")}</div>
+            </td>
+            <td>
+              <div style="font-weight: 600;">${escapeHtml(cli.nomeOficina || "-")}</div>
+              ${idOf ? `<span class="oficina-chip" title="Clique para copiar" onclick="copiarIdOficina('${escapeHtml(idOf)}')">${escapeHtml(idOf)}</span>` : `<span style="color:rgba(236, 253, 245, 0.45);font-size:0.78rem;">Sem idOficina</span>`}
+            </td>
+            <td>
+              <div style="font-weight: 700;">${formatDateBR(dtVenc)}</div>
+              <div style="font-size: 0.78rem; color: rgba(236, 253, 245, 0.65);">Plano: ${escapeHtml(cli.plano || "mensal")} • Dia ${cli.diaVencimento ?? "-"}</div>
+            </td>
+            <td>
+              <span class="badge ${infoVenc.badgeClass || "ativo"}">
+                ${escapeHtml(infoVenc.label)}
+              </span>
+            </td>
+            <td>
+              <span class="badge ${isAtivo ? "ativo" : "inativo"}">
+                ${isAtivo ? "● Ativo" : "● Desativado"}
+              </span>
+            </td>
+            <td>
+              <div class="actions-cell">
+                <button
+                  class="btn-mini btn-mini-renew"
+                  onclick="renovarMaisUmMes('${escapeHtml(uidDoc)}', ${vencMs})"
+                >
+                  Renovar +1 mês
+                </button>
+                <button
+                  class="btn-mini ${isAtivo ? "btn-mini-off" : "btn-mini-on"}"
+                  onclick="alternarStatusCliente('${escapeHtml(uidDoc)}', '${escapeHtml(idOf)}', ${!isAtivo})"
+                >
+                  ${isAtivo ? "Bloquear" : "Liberar"}
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    function aplicarFiltrosClientes() {
+      const oficinaSelecionada = filtroOficinaSelect.value;
+      const statusSelecionado = filtroStatusSelect.value;
+      const termo = buscaClienteInput.value.trim().toLowerCase();
+
+      const filtrados = cacheClientes.filter((c) => {
+        const isAtivo = Boolean(c.ativo ?? c.ativa);
+        if (oficinaSelecionada && c.idOficina !== oficinaSelecionada) {
+          return false;
+        }
+        if (statusSelecionado === "ativo" && !isAtivo) {
+          return false;
+        }
+        if (statusSelecionado === "inativo" && isAtivo) {
+          return false;
+        }
+        if (!termo) return true;
+        return (
+          (c.nome || "").toLowerCase().includes(termo) ||
+          (c.email || "").toLowerCase().includes(termo) ||
+          (c.nomeOficina || "").toLowerCase().includes(termo) ||
+          (c.idOficina || "").toLowerCase().includes(termo)
+        );
+      });
+
+      renderTabelaClientes(filtrados);
+    }
+
+    function aplicarFiltrosVencimentos() {
+      const faixa = filtroVencimentoSelect.value;
+      const termo = buscaVencimentoInput.value.trim().toLowerCase();
+
+      const filtrados = cacheClientes.filter((c) => {
+        const dtVenc = c.dataVencimento?.toDate ? c.dataVencimento.toDate() : null;
+        const info = classificarVencimento(dtVenc);
+
+        if (faixa !== "todos" && info.categoria !== faixa) {
+          return false;
+        }
+        if (!termo) return true;
+        return (
+          (c.nome || "").toLowerCase().includes(termo) ||
+          (c.email || "").toLowerCase().includes(termo) ||
+          (c.nomeOficina || "").toLowerCase().includes(termo) ||
+          (c.idOficina || "").toLowerCase().includes(termo)
+        );
+      });
+
+      renderTabelaVencimentos(filtrados);
+    }
+
+    function escutarClientes() {
+      const colRef = collection(db, "usuarios");
+      onSnapshot(colRef, (snapshot) => {
+        cacheClientes = snapshot.docs
+          .map((d) => ({ id: d.id, ...d.data() }))
+          .filter((u) => u.role !== "admin");
+
+        atualizarKpisEAbas(cacheClientes);
+        atualizarFiltroOficinas(cacheClientes);
+        aplicarFiltrosClientes();
+        aplicarFiltrosVencimentos();
+      }, (err) => {
+        clientesTbody.innerHTML = `<tr><td colspan="7" style="color: #fca5a5;">Erro ao carregar: ${err.message}</td></tr>`;
+        vencimentosTbody.innerHTML = `<tr><td colspan="6" style="color: #fca5a5;">Erro ao carregar: ${err.message}</td></tr>`;
+      });
+    }
+
+    filtroOficinaSelect.addEventListener("change", aplicarFiltrosClientes);
+    filtroStatusSelect.addEventListener("change", aplicarFiltrosClientes);
+    buscaClienteInput.addEventListener("input", aplicarFiltrosClientes);
+
+    filtroVencimentoSelect.addEventListener("change", aplicarFiltrosVencimentos);
+    buscaVencimentoInput.addEventListener("input", aplicarFiltrosVencimentos);
+
+    escutarClientes();
+  </script>
+</body>
+</html>
